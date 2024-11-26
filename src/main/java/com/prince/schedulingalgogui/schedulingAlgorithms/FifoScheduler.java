@@ -1,4 +1,4 @@
-package com.prince.schedulingalgogui.SchedulingAlgo;
+package com.prince.schedulingalgogui.schedulingAlgorithms;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,7 +1,7 @@
-package com.prince.schedulingalgogui.Utils;
+package com.prince.schedulingalgogui.utils;
 
 public enum ViewsLocation {
-    HOMEPAGE("/views/Homepage.fxml"),
+    HOMEPAGE("/views/HomePage.fxml"),
 
     ;
 

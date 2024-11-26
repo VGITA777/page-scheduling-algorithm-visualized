@@ -1,4 +1,4 @@
-package com.prince.schedulingalgogui.SchedulingAlgo;
+package com.prince.schedulingalgogui.schedulingAlgorithms;
 
 @FunctionalInterface
 public interface Listenable<T> {
