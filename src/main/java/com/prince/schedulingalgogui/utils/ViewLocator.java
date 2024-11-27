@@ -1,9 +1,23 @@
 package com.prince.schedulingalgogui.utils;
 
-import java.net.URL;
+import com.prince.schedulingalgogui.App;
+import javafx.fxml.FXMLLoader;
+import lombok.NonNull;
+import lombok.SneakyThrows;
+
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class ViewLocator {
-    public static URL getUrl() {
-        return null;
+    @SneakyThrows
+    @NonNull
+    public static FXMLLoader getLoader(@NonNull ViewsLocation location) {
+        return new FXMLLoader(Objects.requireNonNull(App.class.getResource(location.getLocation())));
+    }
+
+    @SneakyThrows
+    @NonNull
+    public static FXMLLoader getLoader(@NonNull ViewsLocation location, @NonNull ResourceBundle resourceBundle) {
+        return new FXMLLoader(Objects.requireNonNull(App.class.getResource(location.getLocation())), resourceBundle);
     }
 }
