@@ -1,0 +1,51 @@
+.root-pane {
+    -fx-background-color: #DFF2EB;
+}
+
+.title-light {
+    -fx-font-size: 32px;
+}
+
+.title-bold {
+    -fx-font-weight: bold;
+    -fx-fill: linear-gradient(from 58.2938% 64.455% to 95.2607% 5.2133%, #7ab2d3 0.0%, #7ab2d3 0.6711%, #4a628a 100.0%);
+    -fx-font-size: 64px;
+}
+
+.creators-light {
+    -fx-font-size: 24px;
+}
+
+.creators-group-text {
+    -fx-font-size: 32px;
+}
+
+.creators-name-text {
+    -fx-font-size: 28px;
+}
+
+.buttons-container {
+    -fx-hgap: 48px;
+}
+
+.button {
+    -fx-background-radius: 200px;
+    -fx-font-size: 18px;
+    -fx-pref-width: 300px;
+    -fx-padding: 4px 0;
+    -fx-border-radius: 200px;
+    -fx-background-color: #B9E5E8;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #A6CED0;
+}
+
+.primary-colored-text {
+    -fx-text-fill: #4A628A;
+    -fx-fill: #4A628A;
+}

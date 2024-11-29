@@ -1,9 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="com.prince.schedulingalgogui.views.homePage.HomePageController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Text?>
 
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prince.schedulingalgogui.views.homePage.HomePageController">
+    <children>
+        <BorderPane layoutX="128.0" layoutY="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <VBox layoutX="23.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <VBox>
+                                    <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PAGE SCHEDULING ALGORITHM">
+                                 <styleClass>
+                                    <String fx:value="primary-colored-text" />
+                                    <String fx:value="test" />
+                                 </styleClass>
+                              </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-bold" text="VISUALIZER">
+                                            <fill>
+                                                <LinearGradient endX="0.95260663507109" endY="0.052132701421800945" startX="0.5829383886255924" startY="0.6445497630331753">
+                                                    <stops>
+                                                        <Stop>
+                                                            <color>
+                                                                <Color red="0.47843137383461" green="0.6980392336845398" blue="0.8274509906768799" />
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="0.006711409395973154">
+                                                            <color>
+                                                                <Color red="0.47843137383461" green="0.6980392336845398" blue="0.8274509906768799" />
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="1.0">
+                                                            <color>
+                                                                <Color red="0.29019609093666077" green="0.3843137323856354" blue="0.5411764979362488" />
+                                                            </color>
+                                                        </Stop>
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                        </Text>
+                                    </children>
+                                </VBox>
+                                <VBox>
+                                    <children>
+                                        <Text fill="#4a628a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="creators-light" text="by" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="creators-group-text" text="Group 11">
+                                            <fill>
+                                                <LinearGradient endX="1.0" startY="0.8246445497630331">
+                                                    <stops>
+                                                        <Stop>
+                                                            <color>
+                                                                <Color red="0.29019609093666077" green="0.3843137323856354" blue="0.5411764979362488" />
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="0.006711409395973154">
+                                                            <color>
+                                                                <Color red="0.29019609093666077" green="0.3843137323856354" blue="0.5411764979362488" />
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="1.0">
+                                                            <color>
+                                                                <Color red="0.47843137383461" green="0.6980392336845398" blue="0.8274509906768799" />
+                                                            </color>
+                                                        </Stop>
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                        </Text>
+                                        <VBox>
+                                            <children>
+                                                <Text fill="#4a628a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="creators-name-text" text="Coquia, Prince Angelo E." />
+                                                <Text fill="#4a628a" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="creators-name-text" text="Dulay, John Henrich" />
+                                                <Text fill="#4a628a" layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="creators-name-text" text="Tangonan, Justine D." />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </center>
+            <bottom>
+                <AnchorPane BorderPane.alignment="CENTER">
+                    <children>
+                        <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="126.0" layoutY="-14.0" styleClass="buttons-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <Button mnemonicParsing="false" styleClass="primary-colored-text" text="FIFO" />
+                                <Button mnemonicParsing="false" styleClass="primary-colored-text" text="LRU" />
+                            </children>
+                        </FlowPane>
+                    </children>
+                </AnchorPane>
+            </bottom>
+        </BorderPane>
+    </children>
+   <stylesheets>
+      <URL value="@HomepageStyles.css" />
+      <URL value="@../../styles/light.css" />
+      <URL value="@../../styles/styles.css" />
+   </stylesheets>
 </AnchorPane>

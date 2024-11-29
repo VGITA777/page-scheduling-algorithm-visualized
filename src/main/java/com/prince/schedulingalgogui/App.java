@@ -14,9 +14,8 @@ import lombok.SneakyThrows;
 public class App extends Application {
     private static void setupStage(@NonNull Stage stage) {
         stage.setTitle("Scheduling Algorithm Visualizer");
-        stage.setMinWidth(600);
-        stage.setMinHeight(500);
-//        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setMinWidth(1100);
+        stage.setMinHeight(700);
     }
 
     public static void main(String[] args) {
