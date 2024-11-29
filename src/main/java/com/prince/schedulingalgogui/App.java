@@ -15,7 +15,7 @@ public class App extends Application {
     private static void setupStage(@NonNull Stage stage) {
         stage.setTitle("Scheduling Algorithm Visualizer");
         stage.setMinWidth(1100);
-        stage.setMinHeight(700);
+        stage.setMinHeight(600);
     }
 
     public static void main(String[] args) {

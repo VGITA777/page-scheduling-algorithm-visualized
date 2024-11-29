@@ -21,7 +21,7 @@
                         <VBox>
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-light" text="PAGE SCHEDULING ALGORITHM" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-bold" text="VISUALIZER" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-black" text="VISUALIZER" />
                            </children>
                         </VBox>
                         <VBox>
