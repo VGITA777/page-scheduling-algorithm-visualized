@@ -173,6 +173,14 @@ public class HomePageController implements Initializable {
         stringReferenceInputProperty.addListener(realTimeSolverListener);
     }
 
+    private void setUpRealTimeResultListener() {
+        final ChangeListener<HomePageTableData> realTimeResultListener = (observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                createColumnsForTableView(newValue.getSchedulerResult());
+            }
+        };
+    }
+
     /*
      *  For Spinner Setup
      * */
@@ -219,18 +227,24 @@ public class HomePageController implements Initializable {
 
     }
 
-    private void createColumnsForTableView(SchedulerResult schedulerResult) {
+    private void createColumnsForTableView(@NonNull SchedulerResult schedulerResult) {
         // Clear the table view
         dataTable.getColumns().clear();
-
-        List<TableColumn<SchedulerResult, String>> columns = new ArrayList<>();
+        final List<TableColumn<HomePageTableData, String>> columns = new ArrayList<>();
 
         // Add one, because the first column would be the frame number.
         final int stringReferenceLength = schedulerResult.getResult()[0].length + 1;
+        final Object[] stringReference = schedulerResult.getStringReference();
         for (int i = 0; i < stringReferenceLength; i++) {
-            final TableColumn<SchedulerResult, String> column = new TableColumn<>((i == 0) ? "Frame Number" : i);
+            // If it is the first index, then the column name should be "Frame #"
+            // Otherwise, it should be the value of the stringReference array.
+            final String columnName = (i == 0) ? "Frame #" : String.valueOf(stringReference[i - 1]);
+            final TableColumn<HomePageTableData, String> column = new TableColumn<>(columnName);
+            columns.add(column);
         }
 
+        // Add the columns to the table view.
+        dataTable.getColumns().addAll(columns);
     }
 
     @NonNull
