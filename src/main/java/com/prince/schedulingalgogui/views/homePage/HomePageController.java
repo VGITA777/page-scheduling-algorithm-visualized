@@ -86,11 +86,11 @@ public class HomePageController implements Initializable {
         setSchedulerProperty(schedulerToUse);
 
         // For debugging purposes
-        schedulerResultProperty.addListener((_, _, result) -> Arrays.stream(result.getResult()).toList().forEach(d -> {
+/*        schedulerResultProperty.addListener((_, _, result) -> Arrays.stream(result.getResult()).toList().forEach(d -> {
             StringBuilder stringBuilder = new StringBuilder();
             Arrays.stream(d).forEach(e -> stringBuilder.append((e == null) ? "x" : e).append(" "));
             System.out.println(stringBuilder);
-        }));
+        }));*/
     }
 
     /*
