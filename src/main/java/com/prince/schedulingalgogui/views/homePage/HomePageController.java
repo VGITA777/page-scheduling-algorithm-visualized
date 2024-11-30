@@ -1,6 +1,5 @@
 package com.prince.schedulingalgogui.views.homePage;
 
-import com.prince.schedulingalgogui.models.HomePageTableData;
 import com.prince.schedulingalgogui.schedulingAlgorithms.*;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -238,7 +237,6 @@ public class HomePageController implements Initializable {
     private void createColumnsForTableView(@NonNull SchedulerResult schedulerResult) {
         // Ensure result is valid
         if (schedulerResult.getResult() == null || schedulerResult.getResult().length == 0) {
-            System.out.println("No data available for TableView.");
             return;
         }
 
@@ -274,13 +272,8 @@ public class HomePageController implements Initializable {
             // Populate TableView items
             ObservableList<Object[]> data = FXCollections.observableArrayList(result);
             dataTable.setItems(data);
-
-            System.out.println("Columns and data added to TableView successfully.");
         });
     }
-
-
-
 
 
     @NonNull
