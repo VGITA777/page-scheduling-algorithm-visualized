@@ -7,8 +7,8 @@
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.URL?>
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="1100.0" styleClass="root-pane"
+            xmlns="http://javafx.com/javafx/23.0.1"
             fx:controller="com.prince.schedulingalgogui.views.loginPage.LoginPageController">
     <children>
         <BorderPane layoutX="128.0" layoutY="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"

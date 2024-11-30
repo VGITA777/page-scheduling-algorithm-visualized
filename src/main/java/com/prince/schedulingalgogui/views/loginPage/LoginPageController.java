@@ -7,9 +7,8 @@ import javafx.stage.Stage;
 
 public class LoginPageController {
 
-    private final Stage stage;
-
     private static final Navigator navigator = Navigator.getInstance();
+    private final Stage stage;
 
     public LoginPageController(Stage stage) {
         this.stage = stage;

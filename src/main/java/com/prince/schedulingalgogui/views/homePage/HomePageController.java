@@ -23,77 +23,49 @@ import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
 
+    private static final Navigator navigator = Navigator.getInstance();
+    private static final String REFERENCE_INPUT_SEPARATOR = ",";
+    private static final int DEBOUNCE_DURATION_MILLIS = 500;
+    private static final SpinnerValueFactory<Integer> FRAME_COUNT_SPINNER_VALUE_FACTORY = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 3);
+    private final BooleanProperty isCurrentlySolvingProperty = new SimpleBooleanProperty(false);
+    private final ObjectProperty<Schedulers> currentAlgorithmProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<ISchedulerFactory> schedulerFactoryProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<SchedulerResult> schedulerResultProperty = new SimpleObjectProperty<>();
+    private final Stage stage;
+    private final ToggleGroup currentAlgorithmGroup = new ToggleGroup();
+    private final Schedulers schedulerToUse;
+    private final PauseTransition debounce = new PauseTransition(Duration.millis(DEBOUNCE_DURATION_MILLIS));
     @FXML
     private TableView<Object[]> dataTable;
-
     @FXML
     private RadioButton fifoRadioButton;
-
     @FXML
     private Spinner<Integer> frameCountSpinner;
-
-    @FXML
-    private Button homeButton;
-
     @FXML
     private RadioButton lruRadioButton;
-
     @FXML
     private CheckBox realTimeResultCheckbox;
-
+    @FXML
+    private Button homeButton;
     @FXML
     private Button resetButton;
-
     @FXML
     private Button solveButton;
-
     @FXML
     private TextField stringReferenceInput;
-
     @FXML
     private Text hitsText;
-
     @FXML
     private Text faultsText;
-
     @FXML
     private Text referenceStringLengthText;
-
     @FXML
     private Text hitPercentageText;
-
     @FXML
     private Text faultPercentageText;
-
     private StringProperty stringReferenceInputProperty;
-
     private ReadOnlyObjectProperty<Integer> frameCountProperty;
-
     private BooleanProperty realTimeResultCheckboxProperty = new SimpleBooleanProperty(false);
-
-    private final BooleanProperty isCurrentlySolvingProperty = new SimpleBooleanProperty(false);
-
-    private final ObjectProperty<Schedulers> currentAlgorithmProperty = new SimpleObjectProperty<>();
-
-    private final ObjectProperty<ISchedulerFactory> schedulerFactoryProperty = new SimpleObjectProperty<>();
-
-    private final ObjectProperty<SchedulerResult> schedulerResultProperty = new SimpleObjectProperty<>();
-
-    private final Stage stage;
-
-    private final ToggleGroup currentAlgorithmGroup = new ToggleGroup();
-
-    private final Schedulers schedulerToUse;
-
-    private final PauseTransition debounce = new PauseTransition(Duration.millis(DEBOUNCE_DURATION_MILLIS));
-
-    private static final Navigator navigator = Navigator.getInstance();
-
-    private static final String REFERENCE_INPUT_SEPARATOR = ",";
-
-    private static final int DEBOUNCE_DURATION_MILLIS = 500;
-
-    private static final SpinnerValueFactory<Integer> FRAME_COUNT_SPINNER_VALUE_FACTORY = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 3);
 
     public HomePageController(@NonNull Stage stage, @NonNull Schedulers schedulerToUse) {
         this.stage = stage;
@@ -104,13 +76,6 @@ public class HomePageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setup();
         setSchedulerProperty(schedulerToUse);
-
-        // For debugging purposes
-/*        schedulerResultProperty.addListener((_, _, result) -> Arrays.stream(result.getResult()).toList().forEach(d -> {
-            StringBuilder stringBuilder = new StringBuilder();
-            Arrays.stream(d).forEach(e -> stringBuilder.append((e == null) ? "x" : e).append(" "));
-            System.out.println(stringBuilder);
-        }));*/
     }
 
     /*
@@ -151,7 +116,6 @@ public class HomePageController implements Initializable {
         navigator.navigateToLoginPage(stage);
     }
 
-
     /*
      *
      *   Setup Methods Up Ahead
@@ -188,7 +152,6 @@ public class HomePageController implements Initializable {
         });
     }
 
-
     /*
      *   For Real Time Results Setup
      * */
@@ -214,7 +177,7 @@ public class HomePageController implements Initializable {
     }
 
     private void setUpRealTimeResultListener() {
-        final ChangeListener<SchedulerResult> realTimeResultListener = (observable, oldValue, newValue) -> {
+        final ChangeListener<SchedulerResult> realTimeResultListener = (_, _, newValue) -> {
             if (newValue != null) {
                 populateDataForTableView(newValue);
                 startUpdateDescriptiveResults(newValue);
@@ -227,7 +190,6 @@ public class HomePageController implements Initializable {
     /*
      *  For Spinner Setup
      * */
-
     private void setUpFrameCountSpinner() {
         frameCountSpinner.setValueFactory(FRAME_COUNT_SPINNER_VALUE_FACTORY);
     }
@@ -368,6 +330,9 @@ public class HomePageController implements Initializable {
         return Optional.of(referenceArray);
     }
 
+    /*
+     *   Should be used for thread safety.
+     * */
     private void startResetAllData() {
         Platform.runLater(this::resetAllData);
     }
@@ -382,10 +347,12 @@ public class HomePageController implements Initializable {
         frameCountSpinner.setValueFactory(FRAME_COUNT_SPINNER_VALUE_FACTORY);
     }
 
+    @NonNull
     private Double calculateHitPercentage(int hits, int faults) {
         return (double) hits / (hits + faults) * 100;
     }
 
+    @NonNull
     private Double calculateFaultPercentage(int hits, int faults) {
         return (double) faults / (hits + faults) * 100;
     }
