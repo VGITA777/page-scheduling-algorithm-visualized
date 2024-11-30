@@ -1,6 +1,7 @@
 package com.prince.schedulingalgogui.views.homePage;
 
 import com.prince.schedulingalgogui.schedulingAlgorithms.*;
+import com.prince.schedulingalgogui.utils.Navigator;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -78,7 +79,6 @@ public class HomePageController implements Initializable {
 
     private final ObjectProperty<SchedulerResult> schedulerResultProperty = new SimpleObjectProperty<>();
 
-
     private final Stage stage;
 
     private final ToggleGroup currentAlgorithmGroup = new ToggleGroup();
@@ -86,6 +86,8 @@ public class HomePageController implements Initializable {
     private final Schedulers schedulerToUse;
 
     private final PauseTransition debounce = new PauseTransition(Duration.millis(DEBOUNCE_DURATION_MILLIS));
+
+    private static final Navigator navigator = Navigator.getInstance();
 
     private static final String REFERENCE_INPUT_SEPARATOR = ",";
 
@@ -146,6 +148,7 @@ public class HomePageController implements Initializable {
 
     @FXML
     public void onHomeButtonClick() {
+        navigator.navigateToLoginPage(stage);
     }
 
 
