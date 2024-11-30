@@ -11,11 +11,14 @@ import javafx.stage.Stage;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
+import javax.swing.*;
+
 public class App extends Application {
     private static void setupStage(@NonNull Stage stage) {
         stage.setTitle("Scheduling Algorithm Visualizer");
         stage.setMinWidth(1100);
         stage.setMinHeight(600);
+        stage.setOnCloseRequest(_ -> JOptionPane.showMessageDialog(null, "Goodbye, user!"));
     }
 
     public static void main(String[] args) {
