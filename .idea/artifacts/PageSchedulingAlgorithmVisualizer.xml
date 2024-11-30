@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="PageSchedulingAlgorithmVisualizer">
+    <output-path>$PROJECT_DIR$/out/artifacts/PageSchedulingAlgorithmVisualizer</output-path>
+    <root id="archive" name="PageSchedulingAlgorithmVisualizer.jar" />
+  </artifact>
+</component>
