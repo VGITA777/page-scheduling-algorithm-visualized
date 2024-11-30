@@ -5,8 +5,8 @@ import lombok.NonNull;
 
 @Getter
 public enum ViewsLocation {
-    HOMEPAGE("views/homePage/HomePage.fxml"),
-    LOGIN("views/loginPage/LoginPage.fxml"),
+    HOME_PAGE("views/homePage/HomePage.fxml"),
+    LOGIN_PAGE("views/loginPage/LoginPage.fxml"),
     ;
 
     @NonNull

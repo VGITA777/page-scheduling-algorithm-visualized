@@ -1,47 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
-<?import java.lang.String?>
+<?import java.lang.*?>
 <?import java.net.URL?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="1100.0" styleClass="root-pane"
             xmlns="http://javafx.com/javafx/23.0.1"
-            fx:controller="com.prince.schedulingalgogui.views.loginPage.LoginPageController">
+            fx:controller="com.prince.schedulingalgogui.views.homePage.HomePageController">
     <children>
-        <BorderPane layoutX="128.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane layoutX="128.0" layoutY="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <AnchorPane>
                     <children>
-                        <VBox layoutX="23.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0"
-                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                              AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="23.0" layoutY="14.0" styleClass="texts-container" AnchorPane.bottomAnchor="0.0"
+                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <VBox>
                                     <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-light"
-                                              text="PAGE SCHEDULING ALGORITHM"/>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-black"
-                                              text="VISUALIZER"/>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PAGE SCHEDULING ALGORITHM">
+                                            <styleClass>
+                                                <String fx:value="primary-colored-text"/>
+                                                <String fx:value="title-light"/>
+                                                <String fx:value="roboto-light"/>
+                                            </styleClass>
+                                        </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="VISUALIZER">
+                                            <fill>
+                                                <LinearGradient endX="0.95260663507109" endY="0.052132701421800945"
+                                                                startX="0.5829383886255924" startY="0.6445497630331753">
+                                                    <stops>
+                                                        <Stop>
+                                                            <color>
+                                                                <Color red="0.47843137383461" green="0.6980392336845398"
+                                                                       blue="0.8274509906768799"/>
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="0.006711409395973154">
+                                                            <color>
+                                                                <Color red="0.47843137383461" green="0.6980392336845398"
+                                                                       blue="0.8274509906768799"/>
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="1.0">
+                                                            <color>
+                                                                <Color red="0.29019609093666077"
+                                                                       green="0.3843137323856354"
+                                                                       blue="0.5411764979362488"/>
+                                                            </color>
+                                                        </Stop>
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                            <styleClass>
+                                                <String fx:value="title-black"/>
+                                                <String fx:value="roboto-black"/>
+                                            </styleClass>
+                                        </Text>
                                     </children>
                                 </VBox>
-                                <VBox>
+                                <VBox styleClass="creators-container">
                                     <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="by"/>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="group-title"
-                                              text="Group 11"/>
+                                        <Text fill="#4a628a" strokeType="OUTSIDE" strokeWidth="0.0" text="by">
+                                            <styleClass>
+                                                <String fx:value="creators-light-text"/>
+                                                <String fx:value="roboto-condensed-light"/>
+                                            </styleClass>
+                                        </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Group 11">
+                                            <fill>
+                                                <LinearGradient endX="1.0" startY="0.8246445497630331">
+                                                    <stops>
+                                                        <Stop>
+                                                            <color>
+                                                                <Color red="0.29019609093666077"
+                                                                       green="0.3843137323856354"
+                                                                       blue="0.5411764979362488"/>
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="0.006711409395973154">
+                                                            <color>
+                                                                <Color red="0.29019609093666077"
+                                                                       green="0.3843137323856354"
+                                                                       blue="0.5411764979362488"/>
+                                                            </color>
+                                                        </Stop>
+                                                        <Stop offset="1.0">
+                                                            <color>
+                                                                <Color red="0.47843137383461" green="0.6980392336845398"
+                                                                       blue="0.8274509906768799"/>
+                                                            </color>
+                                                        </Stop>
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                            <styleClass>
+                                                <String fx:value="creators-group-text"/>
+                                                <String fx:value="roboto-black"/>
+                                            </styleClass>
+                                        </Text>
                                         <VBox>
                                             <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                                                      text="Coquia, Prince Angelo"/>
-                                                <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
-                                                      strokeWidth="0.0" styleClass="creator-names"
-                                                      text="Dulay, John Henrich"/>
-                                                <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE"
-                                                      strokeWidth="0.0" styleClass="creator-names"
-                                                      text="Tangonan, Justine D."/>
+                                                <Text fill="#4a628a" strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      text="Coquia, Prince Angelo E.">
+                                                    <styleClass>
+                                                        <String fx:value="creators-name-text"/>
+                                                        <String fx:value="roboto-light"/>
+                                                    </styleClass>
+                                                </Text>
+                                                <Text fill="#4a628a" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" text="Dulay, John Henrich">
+                                                    <styleClass>
+                                                        <String fx:value="creators-name-text"/>
+                                                        <String fx:value="roboto-light"/>
+                                                    </styleClass>
+                                                </Text>
+                                                <Text fill="#4a628a" layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" text="Tangonan, Justine D.">
+                                                    <styleClass>
+                                                        <String fx:value="creators-name-text"/>
+                                                        <String fx:value="roboto-light"/>
+                                                    </styleClass>
+                                                </Text>
                                             </children>
                                         </VBox>
                                     </children>
@@ -49,29 +132,29 @@
                             </children>
                         </VBox>
                     </children>
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
                 </AnchorPane>
             </center>
             <bottom>
                 <AnchorPane BorderPane.alignment="CENTER">
                     <children>
-                        <FlowPane layoutX="126.0" layoutY="-14.0" AnchorPane.bottomAnchor="0.0"
-                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER" styleClass="buttons-container" AnchorPane.bottomAnchor="0.0"
+                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Button"/>
-                                <Button mnemonicParsing="false" text="Button"/>
+                                <Button mnemonicParsing="false" styleClass="primary-colored-text" text="FIFO"/>
+                                <Button mnemonicParsing="false" styleClass="primary-colored-text" text="LRU"/>
                             </children>
-                        </FlowPane>
+                        </HBox>
                     </children>
                 </AnchorPane>
             </bottom>
         </BorderPane>
     </children>
-    <styleClass>
-        <String fx:value="root-pane"/>
-        <String fx:value="dark"/>
-    </styleClass>
     <stylesheets>
-        <URL value="@../../styles/styles.css"/>
         <URL value="@LoginPageStyles.css"/>
+        <URL value="@../../styles/styles.css"/>
+        <URL value="@../../styles/light.css"/>
     </stylesheets>
 </AnchorPane>

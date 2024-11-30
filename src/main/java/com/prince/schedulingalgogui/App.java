@@ -25,7 +25,7 @@ public class App extends Application {
     @SneakyThrows
     @Override
     public void start(Stage stage) {
-        final FXMLLoader loader = ViewLocator.getLoader(ViewsLocation.HOMEPAGE);
+        final FXMLLoader loader = ViewLocator.getLoader(ViewsLocation.LOGIN_PAGE);
         loader.setControllerFactory(_ -> new HomePageController(stage));
         final Parent root = loader.load();
         final Scene scene = new Scene(root);
