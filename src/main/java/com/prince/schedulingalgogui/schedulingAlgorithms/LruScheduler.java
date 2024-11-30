@@ -70,7 +70,7 @@ public final class LruScheduler extends Scheduler {
                 result[i][referenceItemIndex] = result[i][referenceItemIndex - 1];
                 // Check if the last item from the current frame has the same value as the referenceItem
                 // If it is then we reset the age of the current frame because it was used.
-                if (result[i][referenceItemIndex] == referenceItem) {
+                if (result[i][referenceItemIndex] == referenceItem || result[i][referenceItemIndex].equals(referenceItem)) {
                     resetFrameAge(i);
                 }
             }
