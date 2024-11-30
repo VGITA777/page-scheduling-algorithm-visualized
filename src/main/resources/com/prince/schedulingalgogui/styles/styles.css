@@ -33,6 +33,11 @@
     src: url("../fonts/RobotoCondensed-Light.ttf");
 }
 
+@font-face {
+    font-family: "Roboto Condensed Medium Italic";
+    src: url("../fonts/RobotoCondensed-MediumItalic.ttf");
+}
+
 * {
     -fx-font-family: "Roboto Regular";
 
