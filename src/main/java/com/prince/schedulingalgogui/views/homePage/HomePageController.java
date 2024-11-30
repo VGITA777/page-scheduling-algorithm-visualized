@@ -99,8 +99,6 @@ public class HomePageController implements Initializable {
         }));
     }
 
-
-
     /*
      *
      *   Class Methods Up Ahead
@@ -116,7 +114,7 @@ public class HomePageController implements Initializable {
 
     private void solve() {
         isCurrentlySolvingProperty.set(true);
-        final Object[] referenceArray = getReference().orElse(new Object[0]);
+        final Object[] referenceArray = getReferenceStringAsAnArrayOfObjects().orElse(new Object[0]);
         final int frameCount = frameCountSpinner.getValue();
         final Scheduler scheduler = schedulerFactoryProperty.get().createScheduler(frameCount, referenceArray);
         final SchedulerResult result = scheduler.start();
@@ -124,25 +122,16 @@ public class HomePageController implements Initializable {
         isCurrentlySolvingProperty.set(false);
     }
 
-    @NonNull
-    private Optional<Object[]> getReference() {
-        final String[] referenceString = Arrays.stream(stringReferenceInputProperty.get().split(REFERENCE_INPUT_SEPARATOR)).map(String::trim).filter(d -> !d.isBlank()).toArray(String[]::new);
-        final Object[] referenceArray = new Object[referenceString.length];
-        System.arraycopy(referenceString, 0, referenceArray, 0, referenceString.length);
-        return Optional.of(referenceArray);
-    }
-
-
     /*
      *
      *   Setup Methods Up Ahead
      *
      * */
     private void setup() {
-        setUpCurrentAlgorithmRadioButtons();
-        setUpFrameCountSpinner();
         setupProperties();
         setupSchedulerFactory();
+        setUpCurrentAlgorithmRadioButtons();
+        setUpFrameCountSpinner();
         setUpRealTimeSolverListener();
     }
 
@@ -251,5 +240,14 @@ public class HomePageController implements Initializable {
                 break;
         }
     }
+
+    @NonNull
+    private Optional<Object[]> getReferenceStringAsAnArrayOfObjects() {
+        final String[] referenceString = Arrays.stream(stringReferenceInputProperty.get().split(REFERENCE_INPUT_SEPARATOR)).map(String::trim).filter(d -> !d.isBlank()).toArray(String[]::new);
+        final Object[] referenceArray = new Object[referenceString.length];
+        System.arraycopy(referenceString, 0, referenceArray, 0, referenceString.length);
+        return Optional.of(referenceArray);
+    }
+
 }
 
