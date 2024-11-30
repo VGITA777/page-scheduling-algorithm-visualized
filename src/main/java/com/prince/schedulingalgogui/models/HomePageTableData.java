@@ -4,12 +4,12 @@ import com.prince.schedulingalgogui.schedulingAlgorithms.SchedulerResult;
 import lombok.Getter;
 
 @Getter
-public class HomePageRowData {
-    private final int framePosition;
+public class HomePageTableData {
+    private final int frameCount;
     private final SchedulerResult schedulerResult;
 
-    public HomePageRowData(int framePosition, SchedulerResult schedulerResult) {
-        this.framePosition = framePosition;
+    public HomePageTableData(int frameCount, SchedulerResult schedulerResult) {
+        this.frameCount = frameCount;
         this.schedulerResult = schedulerResult;
     }
 }
