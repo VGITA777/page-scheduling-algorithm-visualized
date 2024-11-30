@@ -21,7 +21,45 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="dataTable" styleClass="data-table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <TableView fx:id="dataTable" styleClass="data-table" />
+                        <HBox styleClass="descriptive-results-container">
+                           <children>
+                              <HBox styleClass="descriptive-result" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-label" text="Hits:" />
+                                    <Text fx:id="hitsText" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-value" text="0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="10.0" styleClass="descriptive-result" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-label" text="Faults:" />
+                                    <Text fx:id="faultsText" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-value" text="0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="210.0" layoutY="10.0" styleClass="descriptive-result" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-label" text="Reference Length:" />
+                                    <Text fx:id="referenceStringLengthText" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-value" text="0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="638.0" layoutY="14.0" styleClass="descriptive-result" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-label" text="Hit %:" />
+                                    <Text fx:id="hitPercentageText" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-value" text="0.00" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="803.0" layoutY="14.0" styleClass="descriptive-result" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-label" text="Fault %:" />
+                                    <Text fx:id="faultPercentageText" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descriptive-result-value" text="0.00" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </center>
@@ -74,9 +112,9 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" styleClass="buttons-container">
                            <children>
-                              <Button fx:id="solveButton" mnemonicParsing="false" text="Solve" />
-                              <Button fx:id="resetButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Reset" />
-                              <Button fx:id="homeButton" layoutX="410.0" layoutY="10.0" mnemonicParsing="false" styleClass="home-button" text="Home" />
+                              <Button fx:id="solveButton" mnemonicParsing="false" onAction="#onSolveButtonClicked" text="Solve" />
+                              <Button fx:id="resetButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onResetButtonClick" text="Reset" />
+                              <Button fx:id="homeButton" layoutX="410.0" layoutY="10.0" mnemonicParsing="false" onAction="#onHomeButtonClick" styleClass="home-button" text="Home" />
                            </children>
                         </HBox>
                      </children>

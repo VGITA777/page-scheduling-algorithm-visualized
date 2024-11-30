@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.NonNull;
@@ -48,6 +49,21 @@ public class HomePageController implements Initializable {
     @FXML
     private TextField stringReferenceInput;
 
+    @FXML
+    private Text hitsText;
+
+    @FXML
+    private Text faultsText;
+
+    @FXML
+    private Text referenceStringLengthText;
+
+    @FXML
+    private Text hitPercentageText;
+
+    @FXML
+    private Text faultPercentageText;
+
     private StringProperty stringReferenceInputProperty;
 
     private ReadOnlyObjectProperty<Integer> frameCountProperty;
@@ -74,6 +90,8 @@ public class HomePageController implements Initializable {
     private static final String REFERENCE_INPUT_SEPARATOR = ",";
 
     private static final int DEBOUNCE_DURATION_MILLIS = 500;
+
+    private static final SpinnerValueFactory<Integer> FRAME_COUNT_SPINNER_VALUE_FACTORY = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 3);
 
     public HomePageController(@NonNull Stage stage, @NonNull Schedulers schedulerToUse) {
         this.stage = stage;
@@ -115,6 +133,21 @@ public class HomePageController implements Initializable {
         schedulerResultProperty.set(result);
         isCurrentlySolvingProperty.set(false);
     }
+
+    @FXML
+    public void onSolveButtonClicked() {
+        startSolver();
+    }
+
+    @FXML
+    public void onResetButtonClick() {
+        startResetAllData();
+    }
+
+    @FXML
+    public void onHomeButtonClick() {
+    }
+
 
     /*
      *
@@ -181,6 +214,7 @@ public class HomePageController implements Initializable {
         final ChangeListener<SchedulerResult> realTimeResultListener = (observable, oldValue, newValue) -> {
             if (newValue != null) {
                 populateDataForTableView(newValue);
+                startUpdateDescriptiveResults(newValue);
             }
         };
 
@@ -192,8 +226,7 @@ public class HomePageController implements Initializable {
      * */
 
     private void setUpFrameCountSpinner() {
-        final SpinnerValueFactory<Integer> frameCountSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 3);
-        frameCountSpinner.setValueFactory(frameCountSpinnerValueFactory);
+        frameCountSpinner.setValueFactory(FRAME_COUNT_SPINNER_VALUE_FACTORY);
     }
 
     /*
@@ -227,7 +260,7 @@ public class HomePageController implements Initializable {
     }
 
     /*
-     *  For Table View Setup
+     *  For Table View Data Population
      * */
     private void populateDataForTableView(@NonNull SchedulerResult schedulerResult) {
         // Ensure result is valid
@@ -278,6 +311,7 @@ public class HomePageController implements Initializable {
         });
     }
 
+    @NonNull
     private TableColumn<Object[], String> getStringTableColumn() {
         TableColumn<Object[], String> frameColumn = new TableColumn<>("Frame #");
         frameColumn.setCellValueFactory(cellData -> {
@@ -294,6 +328,20 @@ public class HomePageController implements Initializable {
         return frameColumn;
     }
 
+    /*
+     *   Setup for updating Descriptive Results
+     * */
+    private void startUpdateDescriptiveResults(@NonNull SchedulerResult schedulerResult) {
+        Platform.runLater(() -> updateDescriptiveResults(schedulerResult));
+    }
+
+    private void updateDescriptiveResults(@NonNull SchedulerResult schedulerResult) {
+        hitsText.setText(String.valueOf(schedulerResult.getPageHit()));
+        faultsText.setText(String.valueOf(schedulerResult.getPageFault()));
+        referenceStringLengthText.setText(String.valueOf(schedulerResult.getStringReference().length));
+        hitPercentageText.setText(String.format("%.2f", calculateHitPercentage(schedulerResult.getPageHit(), schedulerResult.getPageFault()).isNaN() ? 0 : calculateHitPercentage(schedulerResult.getPageHit(), schedulerResult.getPageFault())));
+        faultPercentageText.setText(String.format("%.2f", calculateFaultPercentage(schedulerResult.getPageHit(), schedulerResult.getPageFault()).isNaN() ? 0 : calculateFaultPercentage(schedulerResult.getPageHit(), schedulerResult.getPageFault())));
+    }
 
     /*
      *  Helper Methods Up Ahead
@@ -315,6 +363,28 @@ public class HomePageController implements Initializable {
         final Object[] referenceArray = new Object[referenceString.length];
         System.arraycopy(referenceString, 0, referenceArray, 0, referenceString.length);
         return Optional.of(referenceArray);
+    }
+
+    private void startResetAllData() {
+        Platform.runLater(this::resetAllData);
+    }
+
+    private void resetAllData() {
+        hitsText.setText("0");
+        faultsText.setText("0");
+        referenceStringLengthText.setText("0");
+        hitPercentageText.setText("0%");
+        faultPercentageText.setText("0%");
+        stringReferenceInput.clear();
+        frameCountSpinner.setValueFactory(FRAME_COUNT_SPINNER_VALUE_FACTORY);
+    }
+
+    private Double calculateHitPercentage(int hits, int faults) {
+        return (double) hits / (hits + faults) * 100;
+    }
+
+    private Double calculateFaultPercentage(int hits, int faults) {
+        return (double) faults / (hits + faults) * 100;
     }
 
 }

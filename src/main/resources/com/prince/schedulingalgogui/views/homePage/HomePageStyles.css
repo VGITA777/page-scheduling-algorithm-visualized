@@ -31,6 +31,27 @@
     -fx-fill: -md-on-surface;
 }
 
+.descriptive-results-container {
+    -fx-padding: 4px 12px;
+}
+
+.descriptive-result {
+    -fx-alignment: CENTER;
+    -fx-spacing: 4px;
+}
+
+.descriptive-result-value {
+    -fx-font-family: "Roboto Bold";
+    -fx-font-size: 18px;
+    -fx-fill: -md-primary;
+}
+
+.descriptive-result-label {
+    -fx-font-family: "Roboto Condensed";
+    -fx-font-size: 18px;
+    -fx-fill: -md-primary;
+}
+
 .user-inputs-container {
     -fx-padding: 24px 0 0 0;
 }
