@@ -127,7 +127,7 @@ public class HomePageController implements Initializable {
 
     @NonNull
     private Optional<Object[]> getReference() {
-        final String[] referenceString = stringReferenceInputProperty.get().split(REFERENCE_INPUT_SEPARATOR);
+        final String[] referenceString = Arrays.stream(stringReferenceInputProperty.get().split(REFERENCE_INPUT_SEPARATOR)).map(String::trim).filter(d -> !d.isBlank()).toArray(String[]::new);
         final Object[] referenceArray = new Object[referenceString.length];
         System.arraycopy(referenceString, 0, referenceArray, 0, referenceString.length);
         return Optional.of(referenceArray);
