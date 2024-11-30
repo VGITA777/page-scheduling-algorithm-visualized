@@ -6,7 +6,7 @@
 
     <groupId>com.prince</groupId>
     <artifactId>scheduling-algo-gui</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RELEASE</version>
     <name>scheduling-algo-gui</name>
 
     <properties>
