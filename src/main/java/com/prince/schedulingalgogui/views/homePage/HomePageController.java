@@ -180,12 +180,11 @@ public class HomePageController implements Initializable {
     private void setUpRealTimeResultListener() {
         final ChangeListener<SchedulerResult> realTimeResultListener = (observable, oldValue, newValue) -> {
             if (newValue != null) {
-                createColumnsForTableView(newValue);
+                populateDataForTableView(newValue);
             }
         };
 
         schedulerResultProperty.addListener(realTimeResultListener);
-
     }
 
     /*
@@ -230,11 +229,7 @@ public class HomePageController implements Initializable {
     /*
      *  For Table View Setup
      * */
-    private void setupTableView() {
-
-    }
-
-    private void createColumnsForTableView(@NonNull SchedulerResult schedulerResult) {
+    private void populateDataForTableView(@NonNull SchedulerResult schedulerResult) {
         // Ensure result is valid
         if (schedulerResult.getResult() == null || schedulerResult.getResult().length == 0) {
             return;
@@ -246,17 +241,14 @@ public class HomePageController implements Initializable {
             dataTable.getItems().clear();
 
             // Add Frame Number Column
-            TableColumn<Object[], String> frameColumn = new TableColumn<>("Frame #");
-            frameColumn.setCellValueFactory(cellData -> {
-                ObservableList<Object[]> items = dataTable.getItems();
-                int index = items.indexOf(cellData.getValue());
-                return new SimpleStringProperty(index != -1 ? "Frame " + (index + 1) : "Unknown");
-            });
+            TableColumn<Object[], String> frameColumn = getStringTableColumn();
+            frameColumn.setSortable(false); // Disable sorting
             dataTable.getColumns().add(frameColumn);
 
             // Create Additional Columns for Object[] Data
             Object[][] result = schedulerResult.getResult();
             Object[] reference = schedulerResult.getStringReference();
+            PageResultStatus[] statuses = schedulerResult.getPageResultStatuses();
             int columnCount = result[0].length;
 
             for (int i = 0; i < columnCount; i++) {
@@ -266,20 +258,42 @@ public class HomePageController implements Initializable {
                     Object[] row = cellData.getValue();
                     return new SimpleStringProperty(row[columnIndex] != null ? row[columnIndex].toString() : ""); // Handle nulls
                 });
+                column.setSortable(false); // Disable sorting
                 dataTable.getColumns().add(column);
             }
 
             // Populate TableView items
             ObservableList<Object[]> data = FXCollections.observableArrayList(result);
+
+            // Add synthetic row for PageResultStatus
+            Object[] statusRow = new Object[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                statusRow[i] = (i < statuses.length)
+                        ? (statuses[i] == PageResultStatus.PAGE_HIT ? "^" : "*") // Add symbol for Page Hit or Page Fault
+                        : ""; // Leave blank if no status is available
+            }
+            data.add(statusRow);
+
             dataTable.setItems(data);
         });
     }
 
+    private TableColumn<Object[], String> getStringTableColumn() {
+        TableColumn<Object[], String> frameColumn = new TableColumn<>("Frame #");
+        frameColumn.setCellValueFactory(cellData -> {
+            ObservableList<Object[]> items = dataTable.getItems();
+            int index = items.indexOf(cellData.getValue());
 
-    @NonNull
-    private TableColumn<SchedulerResult, Integer> createFrameNumberColumn(SchedulerResult schedulerResult) {
-        return null;
+            // Check if it's the last row (synthetic row for statuses)
+            if (index == items.size() - 1) {
+                return new SimpleStringProperty("Status");
+            }
+
+            return new SimpleStringProperty(index != -1 ? "Frame " + (index + 1) : "Unknown");
+        });
+        return frameColumn;
     }
+
 
     /*
      *  Helper Methods Up Ahead
