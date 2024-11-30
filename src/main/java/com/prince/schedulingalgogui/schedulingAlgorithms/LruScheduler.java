@@ -1,9 +1,6 @@
 package com.prince.schedulingalgogui.schedulingAlgorithms;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class LruScheduler extends Scheduler {
     private final List<Object> currentActiveItemsInFrame = new ArrayList<>();
@@ -70,7 +67,7 @@ public final class LruScheduler extends Scheduler {
                 result[i][referenceItemIndex] = result[i][referenceItemIndex - 1];
                 // Check if the last item from the current frame has the same value as the referenceItem
                 // If it is then we reset the age of the current frame because it was used.
-                if (result[i][referenceItemIndex] == referenceItem || result[i][referenceItemIndex].equals(referenceItem)) {
+                if (Objects.equals(result[i][referenceItemIndex], referenceItem)) {
                     resetFrameAge(i);
                 }
             }

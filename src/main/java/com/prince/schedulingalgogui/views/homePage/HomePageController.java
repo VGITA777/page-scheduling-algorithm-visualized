@@ -6,6 +6,8 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -14,12 +16,14 @@ import javafx.util.Duration;
 import lombok.NonNull;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
 
     @FXML
-    private TableView<HomePageTableData> dataTable;
+    private TableView<Object[]> dataTable;
 
     @FXML
     private RadioButton fifoRadioButton;
@@ -124,6 +128,7 @@ public class HomePageController implements Initializable {
         setUpCurrentAlgorithmRadioButtons();
         setUpFrameCountSpinner();
         setUpRealTimeSolverListener();
+        setUpRealTimeResultListener();
     }
 
     private void setupProperties() {
@@ -174,11 +179,14 @@ public class HomePageController implements Initializable {
     }
 
     private void setUpRealTimeResultListener() {
-        final ChangeListener<HomePageTableData> realTimeResultListener = (observable, oldValue, newValue) -> {
+        final ChangeListener<SchedulerResult> realTimeResultListener = (observable, oldValue, newValue) -> {
             if (newValue != null) {
-                createColumnsForTableView(newValue.getSchedulerResult());
+                createColumnsForTableView(newValue);
             }
         };
+
+        schedulerResultProperty.addListener(realTimeResultListener);
+
     }
 
     /*
@@ -228,24 +236,52 @@ public class HomePageController implements Initializable {
     }
 
     private void createColumnsForTableView(@NonNull SchedulerResult schedulerResult) {
-        // Clear the table view
-        dataTable.getColumns().clear();
-        final List<TableColumn<HomePageTableData, String>> columns = new ArrayList<>();
-
-        // Add one, because the first column would be the frame number.
-        final int stringReferenceLength = schedulerResult.getResult()[0].length + 1;
-        final Object[] stringReference = schedulerResult.getStringReference();
-        for (int i = 0; i < stringReferenceLength; i++) {
-            // If it is the first index, then the column name should be "Frame #"
-            // Otherwise, it should be the value of the stringReference array.
-            final String columnName = (i == 0) ? "Frame #" : String.valueOf(stringReference[i - 1]);
-            final TableColumn<HomePageTableData, String> column = new TableColumn<>(columnName);
-            columns.add(column);
+        // Ensure result is valid
+        if (schedulerResult.getResult() == null || schedulerResult.getResult().length == 0) {
+            System.out.println("No data available for TableView.");
+            return;
         }
 
-        // Add the columns to the table view.
-        dataTable.getColumns().addAll(columns);
+        Platform.runLater(() -> {
+            // Clear existing columns and data
+            dataTable.getColumns().clear();
+            dataTable.getItems().clear();
+
+            // Add Frame Number Column
+            TableColumn<Object[], String> frameColumn = new TableColumn<>("Frame #");
+            frameColumn.setCellValueFactory(cellData -> {
+                ObservableList<Object[]> items = dataTable.getItems();
+                int index = items.indexOf(cellData.getValue());
+                return new SimpleStringProperty(index != -1 ? "Frame " + (index + 1) : "Unknown");
+            });
+            dataTable.getColumns().add(frameColumn);
+
+            // Create Additional Columns for Object[] Data
+            Object[][] result = schedulerResult.getResult();
+            Object[] reference = schedulerResult.getStringReference();
+            int columnCount = result[0].length;
+
+            for (int i = 0; i < columnCount; i++) {
+                final int columnIndex = i; // Required for lambda scope
+                TableColumn<Object[], String> column = new TableColumn<>(reference[i].toString());
+                column.setCellValueFactory(cellData -> {
+                    Object[] row = cellData.getValue();
+                    return new SimpleStringProperty(row[columnIndex] != null ? row[columnIndex].toString() : ""); // Handle nulls
+                });
+                dataTable.getColumns().add(column);
+            }
+
+            // Populate TableView items
+            ObservableList<Object[]> data = FXCollections.observableArrayList(result);
+            dataTable.setItems(data);
+
+            System.out.println("Columns and data added to TableView successfully.");
+        });
     }
+
+
+
+
 
     @NonNull
     private TableColumn<SchedulerResult, Integer> createFrameNumberColumn(SchedulerResult schedulerResult) {
