@@ -14,9 +14,7 @@ import javafx.util.Duration;
 import lombok.NonNull;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class HomePageController implements Initializable {
 
@@ -73,13 +71,6 @@ public class HomePageController implements Initializable {
     private static final String REFERENCE_INPUT_SEPARATOR = ",";
 
     private static final int DEBOUNCE_DURATION_MILLIS = 500;
-
-    /*
-     *   This listener is used to listen to changes in frameCountProperty, schedulerFactoryProperty, and stringReferenceProperty.
-     *   If this object is changed, it means that different parameters have been set for the scheduler.
-     *   Which means that we must start the solver again.
-     * */
-    private ChangeListener<Object> realTimeSolverListener;
 
     public HomePageController(@NonNull Stage stage, @NonNull Schedulers schedulerToUse) {
         this.stage = stage;
@@ -162,7 +153,13 @@ public class HomePageController implements Initializable {
      *   For Real Time Results Setup
      * */
     private void setUpRealTimeSolverListener() {
-        realTimeSolverListener = (_, _, _) -> {
+        /*
+         *   This listener is used to listen to changes in frameCountProperty, schedulerFactoryProperty, and stringReferenceProperty.
+         *   If this object is changed, it means that different parameters have been set for the scheduler.
+         *   Which means that we must start the solver again.
+         * */
+        ChangeListener<Object> realTimeSolverListener = (_, _, _) -> {
+            // Checks if realtime updates are enabled.
             if (realTimeResultCheckboxProperty.get()) {
                 debounce.setOnFinished(_ -> startSolver());
                 debounce.playFromStart();
@@ -219,6 +216,20 @@ public class HomePageController implements Initializable {
      *  For Table View Setup
      * */
     private void setupTableView() {
+
+    }
+
+    private void createColumnsForTableView(SchedulerResult schedulerResult) {
+        // Clear the table view
+        dataTable.getColumns().clear();
+
+        List<TableColumn<SchedulerResult, String>> columns = new ArrayList<>();
+
+        // Add one, because the first column would be the frame number.
+        final int stringReferenceLength = schedulerResult.getResult()[0].length + 1;
+        for (int i = 0; i < stringReferenceLength; i++) {
+            final TableColumn<SchedulerResult, String> column = new TableColumn<>((i == 0) ? "Frame Number" : i);
+        }
 
     }
 

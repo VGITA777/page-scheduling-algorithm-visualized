@@ -32,7 +32,7 @@ public abstract class Scheduler implements IScheduler {
             incrementCurrentPageFrameIndex();
         }
 
-        schedulerResult = new SchedulerResult(pageHit, pageFault, result, pageResultStatuses);
+        schedulerResult = new SchedulerResult(pageHit, pageFault, result, pageResultStatuses, reference);
         return schedulerResult;
     }
 
@@ -49,7 +49,7 @@ public abstract class Scheduler implements IScheduler {
     @Override
     public Optional<SchedulerResult> getSchedulerResult() {
         if (schedulerResult == null) return Optional.empty();
-        return Optional.of(new SchedulerResult(pageHit, pageFault, result, pageResultStatuses));
+        return Optional.of(schedulerResult);
     }
 
     protected abstract void handlePageInsertStatus(Object referenceItem, int referenceItemIndex);
