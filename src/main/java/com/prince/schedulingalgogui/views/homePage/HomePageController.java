@@ -1,6 +1,8 @@
 package com.prince.schedulingalgogui.views.homePage;
 
+import com.prince.schedulingalgogui.models.HomePageTableData;
 import com.prince.schedulingalgogui.schedulingAlgorithms.*;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.NonNull;
 
 import java.net.URL;
@@ -18,7 +21,7 @@ import java.util.ResourceBundle;
 public class HomePageController implements Initializable {
 
     @FXML
-    private TableView<SchedulerResult> dataTable;
+    private TableView<HomePageTableData> dataTable;
 
     @FXML
     private RadioButton fifoRadioButton;
@@ -54,16 +57,10 @@ public class HomePageController implements Initializable {
 
     private final ObjectProperty<Schedulers> currentAlgorithmProperty = new SimpleObjectProperty<>();
 
-    // Default of a FIFO Scheduler Factory
-    private ObjectProperty<ISchedulerFactory> schedulerFactoryProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<ISchedulerFactory> schedulerFactoryProperty = new SimpleObjectProperty<>();
 
     private final ObjectProperty<SchedulerResult> schedulerResultProperty = new SimpleObjectProperty<>();
 
-    private final ChangeListener<Object> realTimeSolverListener = (_, _, _) -> {
-        if (realTimeResultCheckboxProperty.get()) {
-            startSolver();
-        }
-    };
 
     private final Stage stage;
 
@@ -71,7 +68,18 @@ public class HomePageController implements Initializable {
 
     private final Schedulers schedulerToUse;
 
+    private final PauseTransition debounce = new PauseTransition(Duration.millis(DEBOUNCE_DURATION_MILLIS));
+
     private static final String REFERENCE_INPUT_SEPARATOR = ",";
+
+    private static final int DEBOUNCE_DURATION_MILLIS = 500;
+
+    /*
+     *   This listener is used to listen to changes in frameCountProperty, schedulerFactoryProperty, and stringReferenceProperty.
+     *   If this object is changed, it means that different parameters have been set for the scheduler.
+     *   Which means that we must start the solver again.
+     * */
+    private ChangeListener<Object> realTimeSolverListener;
 
     public HomePageController(@NonNull Stage stage, @NonNull Schedulers schedulerToUse) {
         this.stage = stage;
@@ -81,9 +89,9 @@ public class HomePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setup();
-
         setSchedulerProperty(schedulerToUse);
 
+        // For debugging purposes
         schedulerResultProperty.addListener((_, _, result) -> Arrays.stream(result.getResult()).toList().forEach(d -> {
             StringBuilder stringBuilder = new StringBuilder();
             Arrays.stream(d).forEach(e -> stringBuilder.append((e == null) ? "x" : e).append(" "));
@@ -91,16 +99,7 @@ public class HomePageController implements Initializable {
         }));
     }
 
-    private void setSchedulerProperty(@NonNull Schedulers schedulerToUse) {
-        switch (schedulerToUse) {
-            case FIFO:
-                schedulerFactoryProperty.set((pageFrames, reference) -> new FifoScheduler(pageFrames, reference, null));
-                break;
-            case LRU:
-                schedulerFactoryProperty.set((pageFrames, reference) -> new LruScheduler(pageFrames, reference, null));
-                break;
-        }
-    }
+
 
     /*
      *
@@ -144,7 +143,7 @@ public class HomePageController implements Initializable {
         setUpFrameCountSpinner();
         setupProperties();
         setupSchedulerFactory();
-        setUpRealTimeResults();
+        setUpRealTimeSolverListener();
     }
 
     private void setupProperties() {
@@ -173,7 +172,16 @@ public class HomePageController implements Initializable {
     /*
      *   For Real Time Results Setup
      * */
-    private void setUpRealTimeResults() {
+    private void setUpRealTimeSolverListener() {
+        realTimeSolverListener = (_, _, _) -> {
+            if (realTimeResultCheckboxProperty.get()) {
+                debounce.setOnFinished(_ -> startSolver());
+                debounce.playFromStart();
+            }
+        };
+
+        // If any of this property changes, it means that different parameters have been set for the scheduler.
+        // Which means that we must start the solver again.
         frameCountProperty.addListener(realTimeSolverListener);
         schedulerFactoryProperty.addListener(realTimeSolverListener);
         stringReferenceInputProperty.addListener(realTimeSolverListener);
@@ -228,6 +236,20 @@ public class HomePageController implements Initializable {
     @NonNull
     private TableColumn<SchedulerResult, Integer> createFrameNumberColumn(SchedulerResult schedulerResult) {
         return null;
+    }
+
+    /*
+     *  Helper Methods Up Ahead
+     * */
+    private void setSchedulerProperty(@NonNull Schedulers schedulerToUse) {
+        switch (schedulerToUse) {
+            case FIFO:
+                schedulerFactoryProperty.set((pageFrames, reference) -> new FifoScheduler(pageFrames, reference, null));
+                break;
+            case LRU:
+                schedulerFactoryProperty.set((pageFrames, reference) -> new LruScheduler(pageFrames, reference, null));
+                break;
+        }
     }
 }
 
