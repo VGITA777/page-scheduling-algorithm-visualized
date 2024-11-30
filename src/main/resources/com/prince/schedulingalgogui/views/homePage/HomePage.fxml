@@ -22,9 +22,9 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView styleClass="data-table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="dataTable" styleClass="data-table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn editable="false" prefWidth="75.0" sortable="false" styleClass="frames-count-column" text="Frames" />
+                        <TableColumn fx:id="dataTableFramesColumn" editable="false" prefWidth="75.0" sortable="false" styleClass="frames-count-column" text="Frames" />
                      </columns>
                   </TableView>
                </children>
@@ -47,8 +47,8 @@
                            <center>
                               <VBox BorderPane.alignment="CENTER">
                                  <children>
-                                    <Spinner styleClass="frame-count-spinner" />
-                                    <TextField promptText="Comma separated string or number (1, 2, 3, 4, ...)" styleClass="reference-string-input-area" />
+                                    <Spinner fx:id="frameCountSpinner" styleClass="frame-count-spinner" />
+                                    <TextField fx:id="stringReferenceInput" promptText="Comma separated string or number (1, 2, 3, 4, ...)" styleClass="reference-string-input-area" />
                                  </children>
                                  <BorderPane.margin>
                                     <Insets />
@@ -65,8 +65,8 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text" text="Current Algorithm" />
                               <VBox>
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="FIFO" />
-                                    <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="LRU" />
+                                    <RadioButton fx:id="fifoRadioButton" mnemonicParsing="false" text="FIFO" />
+                                    <RadioButton fx:id="lruRadioButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="LRU" />
                                  </children>
                               </VBox>
                            </children>
@@ -74,14 +74,14 @@
                         <HBox styleClass="real-time-results-container">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text" text="Real-Time Result:" />
-                              <CheckBox mnemonicParsing="false" prefHeight="30.0" selected="true" />
+                              <CheckBox fx:id="realTimeResultCheckbox" mnemonicParsing="false" prefHeight="30.0" selected="true" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" styleClass="buttons-container">
                            <children>
-                              <Button mnemonicParsing="false" text="Solve" />
-                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Reset" />
-                              <Button layoutX="410.0" layoutY="10.0" mnemonicParsing="false" text="Home" />
+                              <Button fx:id="solveButton" mnemonicParsing="false" text="Solve" />
+                              <Button fx:id="resetButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Reset" />
+                              <Button fx:id="homeButton" layoutX="410.0" layoutY="10.0" mnemonicParsing="false" styleClass="home-button" text="Home" />
                            </children>
                         </HBox>
                      </children>

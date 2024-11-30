@@ -1,5 +1,6 @@
 package com.prince.schedulingalgogui;
 
+import com.prince.schedulingalgogui.schedulingAlgorithms.Schedulers;
 import com.prince.schedulingalgogui.utils.ViewLocator;
 import com.prince.schedulingalgogui.utils.ViewsLocation;
 import com.prince.schedulingalgogui.views.homePage.HomePageController;
@@ -26,7 +27,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         final FXMLLoader loader = ViewLocator.getLoader(ViewsLocation.HOME_PAGE);
-        loader.setControllerFactory(_ -> new HomePageController(stage));
+        loader.setControllerFactory(_ -> new HomePageController(stage, Schedulers.LRU));
         final Parent root = loader.load();
         final Scene scene = new Scene(root);
         stage.setScene(scene);
