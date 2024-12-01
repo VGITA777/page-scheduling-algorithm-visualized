@@ -34,6 +34,8 @@ public class HomePageController implements Initializable {
     private final Schedulers schedulerToUse;
     private final PauseTransition debounce = new PauseTransition(Duration.millis(DEBOUNCE_DURATION_MILLIS));
     @FXML
+    private ProgressBar loadingIndicator;
+    @FXML
     private TableView<Object[]> dataTable;
     @FXML
     private RadioButton fifoRadioButton;
@@ -74,6 +76,13 @@ public class HomePageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setup();
         setSchedulerProperty(schedulerToUse);
+
+        isCurrentlySolvingProperty.addListener((_, _, isSolving) -> {
+            solveButton.setDisable(isSolving);
+            resetButton.setDisable(isSolving);
+            homeButton.setDisable(isSolving);
+            Platform.runLater(() -> loadingIndicator.setVisible(isSolving));
+        });
     }
 
     /*
@@ -86,7 +95,9 @@ public class HomePageController implements Initializable {
      *   Should be used for thread safety.
      * */
     private void startSolver() {
-        new Thread(this::solve).start();
+        final Thread thread = Thread.ofVirtual().unstarted(this::solve);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void solve() {
@@ -96,7 +107,6 @@ public class HomePageController implements Initializable {
         final Scheduler scheduler = schedulerFactoryProperty.get().createScheduler(frameCount, referenceArray);
         final SchedulerResult result = scheduler.start();
         schedulerResultProperty.set(result);
-        isCurrentlySolvingProperty.set(false);
     }
 
     @FXML
@@ -227,24 +237,25 @@ public class HomePageController implements Initializable {
      * */
     private void populateDataForTableView(@NonNull SchedulerResult schedulerResult) {
         if (isResultValid(schedulerResult)) {
-            new Thread(() -> {
-                clearTableView();
+            Thread thread = Thread.ofVirtual().unstarted(() -> {
+                startClearTableView();
                 addFrameNumberColumn();
                 addDataColumns(schedulerResult);
-                populateTableViewItems(schedulerResult);
-            }).start();
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                populateTableWithData(schedulerResult);
+            });
+
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 
     private boolean isResultValid(@NonNull SchedulerResult schedulerResult) {
         return schedulerResult.getResult() != null && schedulerResult.getResult().length > 0;
-    }
-
-    private void clearTableView() {
-        Platform.runLater(() -> {
-            dataTable.getColumns().clear();
-            dataTable.getItems().clear();
-        });
     }
 
     private void addFrameNumberColumn() {
@@ -273,7 +284,7 @@ public class HomePageController implements Initializable {
         Platform.runLater(() -> dataTable.getColumns().addAll(resultsToAdd));
     }
 
-    private void populateTableViewItems(@NonNull SchedulerResult schedulerResult) {
+    private void populateTableWithData(@NonNull SchedulerResult schedulerResult) {
         Object[][] result = schedulerResult.getResult();
         PageResultStatus[] statuses = schedulerResult.getPageResultStatuses();
         int columnCount = result[0].length;
@@ -287,7 +298,10 @@ public class HomePageController implements Initializable {
         }
         data.add(statusRow);
 
-        Platform.runLater(() -> dataTable.setItems(data));
+        Platform.runLater(() -> {
+            dataTable.setItems(data);
+            isCurrentlySolvingProperty.set(false);
+        });
     }
 
     @NonNull
@@ -310,6 +324,7 @@ public class HomePageController implements Initializable {
     /*
      *   Setup for updating Descriptive Results
      * */
+
     private void startUpdateDescriptiveResults(@NonNull SchedulerResult schedulerResult) {
         Platform.runLater(() -> updateDescriptiveResults(schedulerResult));
     }
@@ -325,6 +340,7 @@ public class HomePageController implements Initializable {
     /*
      *  Helper Methods Up Ahead
      * */
+
     private void setSchedulerProperty(@NonNull Schedulers schedulerToUse) {
         switch (schedulerToUse) {
             case FIFO:
@@ -347,6 +363,7 @@ public class HomePageController implements Initializable {
     /*
      *   Should be used for thread safety.
      * */
+
     private void startResetAllData() {
         Platform.runLater(this::resetAllData);
     }
@@ -358,6 +375,8 @@ public class HomePageController implements Initializable {
         hitPercentageText.setText("0%");
         faultPercentageText.setText("0%");
         stringReferenceInput.clear();
+        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
         frameCountSpinner.setValueFactory(FRAME_COUNT_SPINNER_VALUE_FACTORY);
     }
 
@@ -371,5 +390,11 @@ public class HomePageController implements Initializable {
         return (double) faults / (hits + faults) * 100;
     }
 
+    private void startClearTableView() {
+        Platform.runLater(() -> {
+            dataTable.getColumns().clear();
+            dataTable.getItems().clear();
+        });
+    }
 }
 

@@ -3,6 +3,14 @@
     -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(223, 242, 235, 1) 60%, rgba(185, 229, 232, 1) 100%);
 }
 
+.loading-indicator {
+    -fx-pref-height: 10px;
+}
+
+.loading-indicator .track {
+    -fx-background-color: -md-background;
+}
+
 .contents-container {
     -fx-padding: 32px;
 }
