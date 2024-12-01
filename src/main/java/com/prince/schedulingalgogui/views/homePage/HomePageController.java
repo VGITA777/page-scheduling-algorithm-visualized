@@ -76,13 +76,6 @@ public class HomePageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setup();
         setSchedulerProperty(schedulerToUse);
-
-        isCurrentlySolvingProperty.addListener((_, _, isSolving) -> {
-            solveButton.setDisable(isSolving);
-            resetButton.setDisable(isSolving);
-            homeButton.setDisable(isSolving);
-            Platform.runLater(() -> loadingIndicator.setVisible(isSolving));
-        });
     }
 
     /*
@@ -136,6 +129,9 @@ public class HomePageController implements Initializable {
         setUpFrameCountSpinner();
         setUpRealTimeSolverListener();
         setUpRealTimeResultListener();
+        setupLoadingIndicator();
+        setUpSolveButtonSettings();
+        setUpResetButtonSettings();
     }
 
     private void setupProperties() {
@@ -148,6 +144,30 @@ public class HomePageController implements Initializable {
             } else {
                 currentAlgorithmProperty.set(Schedulers.LRU);
             }
+        });
+    }
+
+    /*
+    *   Setups for the buttons
+    * */
+    private void setUpSolveButtonSettings() {
+        // Check for the initial value of the checkbox.
+        // And set the solve button to be disabled if the checkbox is checked.
+        solveButton.setDisable(realTimeResultCheckboxProperty.get());
+
+        // Add a listener to the checkbox to disable the solve button if the checkbox is checked.
+        realTimeResultCheckboxProperty.addListener((_, _, newValue) -> {
+            solveButton.setDisable(newValue);
+        });
+    }
+
+    private void setUpResetButtonSettings() {
+        // Check for the initial value of the input field.
+        resetButton.setDisable(stringReferenceInputProperty.get().isBlank());
+
+        // Add a listener to the input field to disable the reset button if the input field is blank.
+        stringReferenceInputProperty.addListener((_, _, newValue) -> {
+            resetButton.setDisable(newValue.isBlank());
         });
     }
 
@@ -230,6 +250,17 @@ public class HomePageController implements Initializable {
                 lruRadioButton.setSelected(true);
                 break;
         }
+    }
+
+    private void setupLoadingIndicator() {
+        isCurrentlySolvingProperty.addListener((_, _, isSolving) -> {
+            Platform.runLater(() -> {
+                loadingIndicator.setVisible(isSolving);
+                solveButton.setDisable(isSolving || realTimeResultCheckboxProperty.get());
+                resetButton.setDisable(isSolving || stringReferenceInputProperty.get().isBlank());
+                homeButton.setDisable(isSolving);
+            });
+        });
     }
 
     /*
