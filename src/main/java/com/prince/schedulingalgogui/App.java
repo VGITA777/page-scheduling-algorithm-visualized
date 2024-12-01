@@ -16,8 +16,6 @@ import javax.swing.*;
 public class App extends Application {
     private static void setupStage(@NonNull Stage stage) {
         stage.setTitle("Scheduling Algorithm Visualizer");
-        stage.setMinWidth(1100);
-        stage.setMaxWidth(1500);
         stage.setMinHeight(600);
         stage.setMaxHeight(800);
         stage.setOnCloseRequest(_ -> JOptionPane.showMessageDialog(null, "Goodbye, user!"));
