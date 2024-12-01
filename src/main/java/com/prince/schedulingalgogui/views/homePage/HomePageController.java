@@ -148,8 +148,8 @@ public class HomePageController implements Initializable {
     }
 
     /*
-    *   Setups for the buttons
-    * */
+     *   Setups for the buttons
+     * */
     private void setUpSolveButtonSettings() {
         // Check for the initial value of the checkbox.
         // And set the solve button to be disabled if the checkbox is checked.
