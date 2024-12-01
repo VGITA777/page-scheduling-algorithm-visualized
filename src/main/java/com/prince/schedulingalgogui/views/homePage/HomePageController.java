@@ -147,27 +147,6 @@ public class HomePageController implements Initializable {
         });
     }
 
-    private void setUpSolveButtonSettings() {
-        // Check for the initial value of the checkbox.
-        // And set the solve button to be disabled if the checkbox is checked.
-        solveButton.setDisable(realTimeResultCheckboxProperty.get());
-
-        // Add a listener to the checkbox to disable the solve button if the checkbox is checked.
-        realTimeResultCheckboxProperty.addListener((_, _, newValue) -> {
-            solveButton.setDisable(newValue);
-        });
-    }
-
-    private void setUpResetButtonSettings() {
-        // Check for the initial value of the input field.
-        resetButton.setDisable(stringReferenceInputProperty.get().isBlank());
-
-        // Add a listener to the input field to disable the reset button if the input field is blank.
-        stringReferenceInputProperty.addListener((_, _, newValue) -> {
-            resetButton.setDisable(newValue.isBlank());
-        });
-    }
-
     /*
     *   Setups for the buttons
     * */
@@ -177,9 +156,7 @@ public class HomePageController implements Initializable {
         solveButton.setDisable(realTimeResultCheckboxProperty.get());
 
         // Add a listener to the checkbox to disable the solve button if the checkbox is checked.
-        realTimeResultCheckboxProperty.addListener((_, _, newValue) -> {
-            solveButton.setDisable(newValue);
-        });
+        realTimeResultCheckboxProperty.addListener((_, _, newValue) -> solveButton.setDisable(newValue));
     }
 
     private void setUpResetButtonSettings() {
@@ -187,18 +164,14 @@ public class HomePageController implements Initializable {
         resetButton.setDisable(stringReferenceInputProperty.get().isBlank());
 
         // Add a listener to the input field to disable the reset button if the input field is blank.
-        stringReferenceInputProperty.addListener((_, _, newValue) -> {
-            resetButton.setDisable(newValue.isBlank());
-        });
+        stringReferenceInputProperty.addListener((_, _, newValue) -> resetButton.setDisable(newValue.isBlank()));
     }
 
     /*
      *   Should be called after the properties are set up.
      * */
     private void setupSchedulerFactory() {
-        currentAlgorithmProperty.addListener((_, _, newScheduler) -> {
-            setSchedulerProperty(newScheduler);
-        });
+        currentAlgorithmProperty.addListener((_, _, newScheduler) -> setSchedulerProperty(newScheduler));
     }
 
     /*
@@ -274,14 +247,12 @@ public class HomePageController implements Initializable {
     }
 
     private void setupLoadingIndicator() {
-        isCurrentlySolvingProperty.addListener((_, _, isSolving) -> {
-            Platform.runLater(() -> {
-                loadingIndicator.setVisible(isSolving);
-                solveButton.setDisable(isSolving || realTimeResultCheckboxProperty.get());
-                resetButton.setDisable(isSolving || stringReferenceInputProperty.get().isBlank());
-                homeButton.setDisable(isSolving);
-            });
-        });
+        isCurrentlySolvingProperty.addListener((_, _, isSolving) -> Platform.runLater(() -> {
+            loadingIndicator.setVisible(isSolving);
+            solveButton.setDisable(isSolving || realTimeResultCheckboxProperty.get());
+            resetButton.setDisable(isSolving || stringReferenceInputProperty.get().isBlank());
+            homeButton.setDisable(isSolving);
+        }));
     }
 
     /*
