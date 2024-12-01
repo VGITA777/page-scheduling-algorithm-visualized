@@ -17,9 +17,7 @@ import javafx.util.Duration;
 import lombok.NonNull;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class HomePageController implements Initializable {
 
@@ -88,7 +86,7 @@ public class HomePageController implements Initializable {
      *   Should be used for thread safety.
      * */
     private void startSolver() {
-        Platform.runLater(this::solve);
+        new Thread(this::solve).start();
     }
 
     private void solve() {
@@ -228,52 +226,68 @@ public class HomePageController implements Initializable {
      *  For Table View Data Population
      * */
     private void populateDataForTableView(@NonNull SchedulerResult schedulerResult) {
-        // Ensure result is valid
-        if (schedulerResult.getResult() == null || schedulerResult.getResult().length == 0) {
-            return;
+        if (isResultValid(schedulerResult)) {
+            new Thread(() -> {
+                clearTableView();
+                addFrameNumberColumn();
+                addDataColumns(schedulerResult);
+                populateTableViewItems(schedulerResult);
+            }).start();
         }
+    }
 
+    private boolean isResultValid(@NonNull SchedulerResult schedulerResult) {
+        return schedulerResult.getResult() != null && schedulerResult.getResult().length > 0;
+    }
+
+    private void clearTableView() {
         Platform.runLater(() -> {
-            // Clear existing columns and data
             dataTable.getColumns().clear();
             dataTable.getItems().clear();
-
-            // Add Frame Number Column
-            TableColumn<Object[], String> frameColumn = getStringTableColumn();
-            frameColumn.setSortable(false); // Disable sorting
-            dataTable.getColumns().add(frameColumn);
-
-            // Create Additional Columns for Object[] Data
-            Object[][] result = schedulerResult.getResult();
-            Object[] reference = schedulerResult.getStringReference();
-            PageResultStatus[] statuses = schedulerResult.getPageResultStatuses();
-            int columnCount = result[0].length;
-
-            for (int i = 0; i < columnCount; i++) {
-                final int columnIndex = i; // Required for lambda scope
-                TableColumn<Object[], String> column = new TableColumn<>(reference[i].toString());
-                column.setCellValueFactory(cellData -> {
-                    Object[] row = cellData.getValue();
-                    return new SimpleStringProperty(row[columnIndex] != null ? row[columnIndex].toString() : ""); // Handle nulls
-                });
-                column.setSortable(false); // Disable sorting
-                dataTable.getColumns().add(column);
-            }
-
-            // Populate TableView items
-            ObservableList<Object[]> data = FXCollections.observableArrayList(result);
-
-            // Add synthetic row for PageResultStatus
-            Object[] statusRow = new Object[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                statusRow[i] = (i < statuses.length)
-                        ? (statuses[i] == PageResultStatus.PAGE_HIT ? "^" : "*") // Add symbol for Page Hit or Page Fault
-                        : ""; // Leave blank if no status is available
-            }
-            data.add(statusRow);
-
-            dataTable.setItems(data);
         });
+    }
+
+    private void addFrameNumberColumn() {
+        TableColumn<Object[], String> frameColumn = getStringTableColumn();
+        frameColumn.setSortable(false);
+        Platform.runLater(() -> dataTable.getColumns().add(frameColumn));
+    }
+
+    private void addDataColumns(@NonNull SchedulerResult schedulerResult) {
+        Object[][] result = schedulerResult.getResult();
+        Object[] reference = schedulerResult.getStringReference();
+        int columnCount = result[0].length;
+        List<TableColumn<Object[], String>> resultsToAdd = new ArrayList<>();
+
+        for (int i = 0; i < columnCount; i++) {
+            final int columnIndex = i;
+            TableColumn<Object[], String> column = new TableColumn<>(reference[i].toString());
+            column.setCellValueFactory(cellData -> {
+                Object[] row = cellData.getValue();
+                return new SimpleStringProperty(row[columnIndex] != null ? row[columnIndex].toString() : "");
+            });
+            column.setSortable(false);
+            resultsToAdd.addLast(column);
+        }
+
+        Platform.runLater(() -> dataTable.getColumns().addAll(resultsToAdd));
+    }
+
+    private void populateTableViewItems(@NonNull SchedulerResult schedulerResult) {
+        Object[][] result = schedulerResult.getResult();
+        PageResultStatus[] statuses = schedulerResult.getPageResultStatuses();
+        int columnCount = result[0].length;
+
+        ObservableList<Object[]> data = FXCollections.observableArrayList(result);
+        Object[] statusRow = new Object[columnCount];
+        for (int i = 0; i < columnCount; i++) {
+            statusRow[i] = (i < statuses.length)
+                    ? (statuses[i] == PageResultStatus.PAGE_HIT ? "^" : "*")
+                    : "";
+        }
+        data.add(statusRow);
+
+        Platform.runLater(() -> dataTable.setItems(data));
     }
 
     @NonNull
