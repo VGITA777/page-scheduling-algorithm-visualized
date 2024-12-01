@@ -7,11 +7,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class App extends Application {
     public static final int WIDTH = 1100;
@@ -19,9 +21,12 @@ public class App extends Application {
 
     private static void setupStage(@NonNull Stage stage) {
         stage.setTitle("Scheduling Algorithm Visualizer");
+
         stage.setMinWidth(WIDTH);
         stage.setMinHeight(HEIGHT);
         stage.setOnCloseRequest(_ -> JOptionPane.showMessageDialog(null, "Goodbye, user!"));
+
+        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/com/prince/schedulingalgogui/images/app-icon.png"))));
     }
 
     public static void main(String[] args) {
