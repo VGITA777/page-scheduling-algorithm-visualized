@@ -14,10 +14,13 @@ import lombok.SneakyThrows;
 import javax.swing.*;
 
 public class App extends Application {
+    public static final int WIDTH = 1100;
+    public static final int HEIGHT = 600;
+
     private static void setupStage(@NonNull Stage stage) {
         stage.setTitle("Scheduling Algorithm Visualizer");
-        stage.setMinHeight(600);
-        stage.setMaxHeight(800);
+        stage.setMinWidth(WIDTH);
+        stage.setMinHeight(HEIGHT);
         stage.setOnCloseRequest(_ -> JOptionPane.showMessageDialog(null, "Goodbye, user!"));
     }
 
