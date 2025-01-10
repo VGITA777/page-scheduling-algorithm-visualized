@@ -1,179 +1,179 @@
 .root-pane {
-    /*-fx-background-color: #DFF2EB;*/
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(223, 242, 235, 1) 60%, rgba(185, 229, 232, 1) 100%);
+  /*-fx-background-color: #DFF2EB;*/
+  -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(223, 242, 235, 1) 60%, rgba(185, 229, 232, 1) 100%);
 }
 
 .loading-indicator {
-    -fx-pref-height: 10px;
+  -fx-pref-height: 10px;
 }
 
 .loading-indicator .track {
-    -fx-background-color: -md-background;
+  -fx-background-color: -md-background;
 }
 
 .contents-container {
-    -fx-padding: 32px;
+  -fx-padding: 32px;
 }
 
 .data-table {
-    -fx-background-color: -md-surface;
-    -fx-border-color: -md-primary;
-    -fx-border-width: 1px;
-    -fx-border-radius: 0 0 8px 8px;
-    -fx-background-radius: 8px;
+  -fx-background-color: -md-surface;
+  -fx-border-color: -md-primary;
+  -fx-border-width: 1px;
+  -fx-border-radius: 0 0 8px 8px;
+  -fx-background-radius: 8px;
 }
 
 
 .data-table .column-header,
 .data-table .filler {
-    -fx-background-color: -md-primary;
+  -fx-background-color: -md-primary;
 }
 
 .data-table .column-header .label {
-    -fx-text-fill: -md-on-primary;
+  -fx-text-fill: -md-on-primary;
 }
 
 .data-table .placeholder .label .text {
-    -fx-font-family: "Roboto Light";
-    -fx-font-size: 18px;
-    -fx-fill: -md-on-surface;
+  -fx-font-family: "Roboto Light";
+  -fx-font-size: 18px;
+  -fx-fill: -md-on-surface;
 }
 
 .descriptive-results-container {
-    -fx-padding: 4px 12px;
+  -fx-padding: 4px 12px;
 }
 
 .descriptive-result {
-    -fx-alignment: CENTER;
-    -fx-spacing: 4px;
+  -fx-alignment: CENTER;
+  -fx-spacing: 4px;
 }
 
 .descriptive-result-value {
-    -fx-font-family: "Roboto Bold";
-    -fx-font-size: 18px;
-    -fx-fill: -md-primary;
+  -fx-font-family: "Roboto Bold";
+  -fx-font-size: 18px;
+  -fx-fill: -md-primary;
 }
 
 .descriptive-result-label {
-    -fx-font-family: "Roboto Condensed";
-    -fx-font-size: 18px;
-    -fx-fill: -md-primary;
+  -fx-font-family: "Roboto Condensed";
+  -fx-font-size: 18px;
+  -fx-fill: -md-primary;
 }
 
 .user-inputs-container {
-    -fx-padding: 24px 0 0 0;
+  -fx-padding: 24px 0 0 0;
 }
 
 .input-area {
-    -fx-spacing: 18px;
+  -fx-spacing: 18px;
 }
 
 .label-text {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 18px;
-    -fx-fill: -md-primary;
+  -fx-font-family: "Roboto Regular";
+  -fx-font-size: 18px;
+  -fx-fill: -md-primary;
 }
 
 .radio-button .text {
-    -fx-font-family: "Roboto Condensed Medium Italic";
-    -fx-font-style: italic;
-    -fx-font-size: 14px;
-    -fx-fill: -md-primary;
+  -fx-font-family: "Roboto Condensed Medium Italic";
+  -fx-font-style: italic;
+  -fx-font-size: 14px;
+  -fx-fill: -md-primary;
 }
 
 .user-inputs-area-container {
-    -fx-padding: 0 0 0 8px;
+  -fx-padding: 0 0 0 8px;
 }
 
 .frame-count-spinner .text-field {
-    -fx-background-color: -md-background;
-    -fx-border-color: -md-primary;
-    -fx-border-width: 1px;
-    -fx-border-radius: 4px 0px 0 4px;
+  -fx-background-color: -md-background;
+  -fx-border-color: -md-primary;
+  -fx-border-width: 1px;
+  -fx-border-radius: 4px 0px 0 4px;
 }
 
 .frame-count-spinner .increment-arrow-button,
 .frame-count-spinner .decrement-arrow-button {
-    -fx-background-color: -md-secondary;
-    -fx-border-color: -md-primary;
+  -fx-background-color: -md-secondary;
+  -fx-border-color: -md-primary;
 }
 
 .frame-count-spinner .increment-arrow-button:hover,
 .frame-count-spinner .decrement-arrow-button:hover {
-    -fx-cursor: hand;
+  -fx-cursor: hand;
 }
 
 .frame-count-spinner .increment-arrow-button:pressed,
 .frame-count-spinner .decrement-arrow-button:pressed {
-    -fx-background-color: #699ab7;
+  -fx-background-color: #699ab7;
 }
 
 .frame-count-spinner .increment-arrow-button {
-    -fx-border-radius: 0 4px 0 0;
+  -fx-border-radius: 0 4px 0 0;
 }
 
 .frame-count-spinner .decrement-arrow-button {
-    -fx-border-radius: 0 0 4px 0;
+  -fx-border-radius: 0 0 4px 0;
 }
 
 
 .frame-count-spinner .increment-arrow-button .increment-arrow,
 .frame-count-spinner .decrement-arrow-button .decrement-arrow {
-    -fx-background-color: -md-primary;
+  -fx-background-color: -md-primary;
 }
 
 .reference-string-input-area {
-    -fx-background-color: transparent;
-    -fx-border-color: -md-primary;
-    -fx-max-width: 400px;
-    -fx-border-width: 0 0 1px 0;
+  -fx-background-color: transparent;
+  -fx-border-color: -md-primary;
+  -fx-max-width: 400px;
+  -fx-border-width: 0 0 1px 0;
 }
 
 .radio-buttons-container {
-    -fx-spacing: 8px;
+  -fx-spacing: 8px;
 }
 
 .real-time-results-container {
-    -fx-spacing: 8px;
+  -fx-spacing: 8px;
 }
 
 .buttons-container {
-    -fx-alignment: CENTER;
-    -fx-spacing: 18px;
+  -fx-alignment: CENTER;
+  -fx-spacing: 18px;
 }
 
 .button {
-    -fx-background-color: -md-surface;
-    -fx-text-fill: -md-on-surface;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 0);
-    -fx-background-radius: 200px;
-    -fx-pref-width: 200px;
-    -fx-font-size: 18px;
-    -fx-padding: 4px 0;
-    -fx-border-radius: 200px;
+  -fx-background-color: -md-surface;
+  -fx-text-fill: -md-on-surface;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 0);
+  -fx-background-radius: 200px;
+  -fx-pref-width: 200px;
+  -fx-font-size: 18px;
+  -fx-padding: 4px 0;
+  -fx-border-radius: 200px;
 }
 
 .home-button {
-    -fx-background-color: transparent;
-    -fx-border-color: -md-primary;
-    -fx-border-width: 1px;
-    -fx-border-radius: 50px;
+  -fx-background-color: transparent;
+  -fx-border-color: -md-primary;
+  -fx-border-width: 1px;
+  -fx-border-radius: 50px;
 }
 
 .button .text {
-    -fx-font-family: "Roboto Condensed";
+  -fx-font-family: "Roboto Condensed";
 }
 
 .button:hover {
-    -fx-cursor: hand;
-    -fx-background-color: #90b3b5;
+  -fx-cursor: hand;
+  -fx-background-color: #90b3b5;
 }
 
 .button:pressed {
-    -fx-background-color: #7a989a;
+  -fx-background-color: #7a989a;
 }
 
 .primary-colored-text {
-    -fx-text-fill: -md-primary;
-    -fx-fill: -md-primary;
+  -fx-text-fill: -md-primary;
+  -fx-fill: -md-primary;
 }

@@ -7,20 +7,20 @@ import javafx.stage.Stage;
 
 public class LoginPageController {
 
-    private static final Navigator navigator = Navigator.getInstance();
-    private final Stage stage;
+  private static final Navigator navigator = Navigator.getInstance();
+  private final Stage stage;
 
-    public LoginPageController(Stage stage) {
-        this.stage = stage;
-    }
+  public LoginPageController(Stage stage) {
+    this.stage = stage;
+  }
 
-    @FXML
-    void onFifoButtonClick(ActionEvent event) {
-        navigator.navigateToHomePageWithFifo(stage);
-    }
+  @FXML
+  void onFifoButtonClick(ActionEvent event) {
+    navigator.navigateToHomePageWithFifo(stage);
+  }
 
-    @FXML
-    void onLruButtonClick(ActionEvent event) {
-        navigator.navigateToHomePageWithLru(stage);
-    }
+  @FXML
+  void onLruButtonClick(ActionEvent event) {
+    navigator.navigateToHomePageWithLru(stage);
+  }
 }
