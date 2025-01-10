@@ -24,7 +24,6 @@ public class App extends Application {
 
         stage.setMinWidth(WIDTH);
         stage.setMinHeight(HEIGHT);
-        stage.setOnCloseRequest(windowEvent -> JOptionPane.showMessageDialog(null, "Goodbye, user!"));
 
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/com/prince/schedulingalgogui/images/app-icon.png"))));
     }
