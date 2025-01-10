@@ -75,7 +75,7 @@ public final class LruScheduler extends Scheduler {
     }
 
     private void ageFrames() {
-        frameAgeMap.replaceAll((_, v) -> v + 1);
+        frameAgeMap.replaceAll((x, v) -> v + 1);
     }
 
     private void resetFrameAge(int key) {

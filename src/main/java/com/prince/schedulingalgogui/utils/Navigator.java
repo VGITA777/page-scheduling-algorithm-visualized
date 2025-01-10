@@ -29,7 +29,7 @@ public class Navigator {
 
     @SneakyThrows
     public void navigateToLoginPage(@NonNull Stage stage) {
-        navigateTo(stage, ViewsLocation.LOGIN_PAGE, _ -> new LoginPageController(stage));
+        navigateTo(stage, ViewsLocation.LOGIN_PAGE, clazz -> new LoginPageController(stage));
     }
 
     public void navigateToHomePageWithFifo(@NonNull Stage stage) {
@@ -42,7 +42,7 @@ public class Navigator {
 
     @SneakyThrows
     private void navigateToHomePage(@NonNull Stage stage, @NonNull Schedulers scheduler) {
-        navigateTo(stage, ViewsLocation.HOME_PAGE, _ -> new HomePageController(stage, scheduler));
+        navigateTo(stage, ViewsLocation.HOME_PAGE, clazz -> new HomePageController(stage, scheduler));
     }
 
     @SneakyThrows
