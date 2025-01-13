@@ -25,7 +25,7 @@
 
 ---
 
-### TODOs:
+### TODOS
 
 - Implement other page scheduling algorithms.
 
