@@ -31,8 +31,7 @@ public abstract class Scheduler implements IScheduler {
         // Access each item from the reference array.
         for (int i = 0; i < reference.length; i++) {
             final Object page = reference[i];
-            handlePageInsertStatus(page, i);
-            handlePageInsertStatusResult(page, i);
+            handleObject(page, i);
             incrementCurrentPageFrameIndex();
         }
 
@@ -61,12 +60,7 @@ public abstract class Scheduler implements IScheduler {
         return Optional.of(schedulerResult);
     }
 
-    protected abstract void handlePageInsertStatus(Object referenceItem, int referenceItemIndex);
-
-    protected abstract void handlePageInsertStatusResult(
-            Object referenceItem,
-            int referenceItemIndex
-                                                        );
+    protected abstract void handleObject(Object referenceItem, int referenceItemIndex);
 
     private void incrementCurrentPageFrameIndex() {
         if (currentPageFrameIndex + 1 >= pageFrames) {

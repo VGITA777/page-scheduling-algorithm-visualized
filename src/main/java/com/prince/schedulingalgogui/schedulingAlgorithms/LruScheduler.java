@@ -17,67 +17,6 @@ public final class LruScheduler extends Scheduler {
         }
     }
 
-    @Override
-    protected void handlePageInsertStatus(Object referenceItem, int referenceItemIndex) {
-        // If the current reference item is already in the current active items in frame,
-        // We would need to put it to the end of the list because it's been used.
-        if (currentActiveItemsInFrame.contains(referenceItem)) {
-            // Since the reference is in the list, we need to remove it from the list
-            // and add it to the end of the list because it's the most recently used.
-            currentActiveItemsInFrame.remove(referenceItem);
-            currentActiveItemsInFrame.addLast(referenceItem);
-
-            isPageHit = true;
-            pageHit += 1;
-            pageResultStatuses[referenceItemIndex] = PageResultStatus.PAGE_HIT;
-        } else {
-            // If the current active items in frame is equal to the referenceItem frames,
-            // It means that we need to remove the item in the list.
-            // that has the least activity and add the new reference item.
-            if (currentActiveItemsInFrame.size() == pageFrames) {
-                currentActiveItemsInFrame.removeFirst();
-            }
-            currentActiveItemsInFrame.addLast(referenceItem);
-
-            isPageHit = false;
-            pageFault += 1;
-            pageResultStatuses[referenceItemIndex] = PageResultStatus.PAGE_FAULT;
-        }
-    }
-
-    @Override
-    protected void handlePageInsertStatusResult(Object referenceItem, int referenceItemIndex) {
-        // Age all frames
-        ageFrames();
-
-        if (!isPageHit) {
-            final int indexOfFrameWhichShouldBeUsed = getLeastRecentlyUsedFrameKey();
-            for (int i = 0; i < pageFrames; i++) {
-                // If the current frame is the frame which should be used, we need to
-                // insert the referenceItem to the current frame.
-                // Else just copy the previous data from the current frame.
-                if (i == indexOfFrameWhichShouldBeUsed) {
-                    result[i][referenceItemIndex] = referenceItem;
-                } else if (referenceItemIndex - 1 >= 0) {
-                    result[i][referenceItemIndex] = result[i][referenceItemIndex - 1];
-                }
-            }
-            resetFrameAge(indexOfFrameWhichShouldBeUsed);
-        } else if (referenceItemIndex - 1 >= 0) {
-            // If it's a referenceItem hit, we do nothing about the referenceItemIndex of the frame to use
-            // and just copy the previous data from the current frame to the
-            // current data of the frame. But we need to reset the age of the current frame.
-            for (int i = 0; i < pageFrames; i++) {
-                result[i][referenceItemIndex] = result[i][referenceItemIndex - 1];
-                // Check if the last item from the current frame has the same value as the referenceItem
-                // If it is then we reset the age of the current frame because it was used.
-                if (Objects.equals(result[i][referenceItemIndex], referenceItem)) {
-                    resetFrameAge(i);
-                }
-            }
-        }
-    }
-
     private void ageFrames() {
         frameAgeMap.replaceAll((x, v) -> v + 1);
     }
@@ -98,5 +37,63 @@ public final class LruScheduler extends Scheduler {
         }
 
         return key;
+    }
+
+    @Override
+    protected void handleObject(Object referenceItem, int referenceItemIndex) {
+        // If the current reference item is already in the current active items in frame,
+        // We would need to put it to the end of the list because it's been used.
+        if (currentActiveItemsInFrame.contains(referenceItem)) {
+            // Since the reference is in the list, we need to remove it from the list
+            // and add it to the end of the list because it's the most recently used.
+            currentActiveItemsInFrame.remove(referenceItem);
+            currentActiveItemsInFrame.addLast(referenceItem);
+
+            isPageHit = true;
+            pageHit += 1;
+            pageResultStatuses[referenceItemIndex] = PageResultStatus.PAGE_HIT;
+        } else {
+            // If the current active items in the frame are equal to the referenceItem frames,
+            // It means that we need to remove the item in the list
+            // That has the least activity and insert the new reference item.
+            if (currentActiveItemsInFrame.size() == pageFrames) {
+                currentActiveItemsInFrame.removeFirst();
+            }
+            currentActiveItemsInFrame.addLast(referenceItem);
+
+            isPageHit = false;
+            pageFault += 1;
+            pageResultStatuses[referenceItemIndex] = PageResultStatus.PAGE_FAULT;
+        }
+
+        // Age all frames
+        ageFrames();
+
+        if (!isPageHit) {
+            final int indexOfFrameWhichShouldBeUsed = getLeastRecentlyUsedFrameKey();
+            for (int i = 0; i < pageFrames; i++) {
+                // If the current frame is the frame that should be used, we need to
+                // insert the referenceItem to the current frame.
+                // Else copy the previous data from the current frame.
+                if (i == indexOfFrameWhichShouldBeUsed) {
+                    result[i][referenceItemIndex] = referenceItem;
+                } else if (referenceItemIndex - 1 >= 0) {
+                    result[i][referenceItemIndex] = result[i][referenceItemIndex - 1];
+                }
+            }
+            resetFrameAge(indexOfFrameWhichShouldBeUsed);
+        } else if (referenceItemIndex - 1 >= 0) {
+            // If it's a referenceItem hit, we do nothing about the referenceItemIndex of the frame to use
+            // and just copy the previous data from the current frame to the
+            // current data of the frame. But we need to reset the age of the current frame.
+            for (int i = 0; i < pageFrames; i++) {
+                result[i][referenceItemIndex] = result[i][referenceItemIndex - 1];
+                // Check if the last item from the current frame has the same value as the referenceItem
+                // If it is, then we reset the age of the current frame because it was used.
+                if (Objects.equals(result[i][referenceItemIndex], referenceItem)) {
+                    resetFrameAge(i);
+                }
+            }
+        }
     }
 }

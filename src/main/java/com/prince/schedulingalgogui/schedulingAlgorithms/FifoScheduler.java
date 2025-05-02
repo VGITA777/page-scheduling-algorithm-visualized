@@ -21,7 +21,7 @@ public final class FifoScheduler extends Scheduler {
     }
 
     @Override
-    protected void handlePageInsertStatus(Object referenceItem, int referenceItemIndex) {
+    protected void handleObject(Object referenceItem, int referenceItemIndex) {
         if (curretActiveItemsInFrameQueue.contains(referenceItem)) {
             pageHit++;
             isPageHit = true;
@@ -35,17 +35,15 @@ public final class FifoScheduler extends Scheduler {
             pageResultStatuses[referenceItemIndex] = PageResultStatus.PAGE_FAULT;
             isPageHit = false;
         }
-    }
 
-    protected void handlePageInsertStatusResult(Object referenceItem, int referenceItemIndex) {
         // If it's not referenceItem hit, we need to remove the first
         // frame from the referenceItemIndex of frame to use and add it to the end of the queue.
         if (!isPageHit) {
             final int indexOfFrameWhichShouldBeUsed = indexOfFrameToUse.remove();
             for (int i = 0; i < pageFrames; i++) {
-                // If the current frame is the frame which should be used, we need to
+                // If the current frame is the frame that should be used, we need to
                 // insert the referenceItem to the current frame.
-                // Else just copy the previous data from the current frame.
+                // Else copy the previous data from the current frame.
                 if (i == indexOfFrameWhichShouldBeUsed) {
                     result[i][referenceItemIndex] = referenceItem;
                 } else if (referenceItemIndex - 1 >= 0) {
