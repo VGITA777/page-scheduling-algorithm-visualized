@@ -4,11 +4,11 @@ import java.util.Optional;
 
 public interface IScheduler {
 
-  SchedulerResult start();
+    SchedulerResult start();
 
-  int getPageFrames();
+    int getPageFrames();
 
-  Object[] getReference();
+    Object[] getReference();
 
-  Optional<SchedulerResult> getSchedulerResult();
+    Optional<SchedulerResult> getSchedulerResult();
 }

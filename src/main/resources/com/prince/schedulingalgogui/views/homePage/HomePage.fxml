@@ -1,182 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="1100.0"
-  styleClass="root-pane"
-  xmlns="http://javafx.com/javafx/23.0.1"
-  fx:controller="com.prince.schedulingalgogui.views.homePage.HomePageController">
-  <children>
-    <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-      layoutX="10.0"
-      layoutY="10.0">
-      <children>
-        <ProgressBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0" styleClass="loading-indicator" visible="false"
-          fx:id="loadingIndicator"/>
-      </children>
-    </AnchorPane>
-    <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-      AnchorPane.rightAnchor="0.0"
-      AnchorPane.topAnchor="0.0" styleClass="contents-container">
-      <bottom>
-        <AnchorPane BorderPane.alignment="CENTER" prefHeight="200.0" prefWidth="200.0"
-          styleClass="user-inputs-container">
-          <children>
-            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0"
-              prefHeight="200.0" prefWidth="100.0" styleClass="input-area">
-              <children>
-                <BorderPane>
-                  <center>
-                    <VBox BorderPane.alignment="CENTER">
-                      <BorderPane.margin>
-                        <Insets/>
-                      </BorderPane.margin>
-                      <children>
-                        <Spinner styleClass="frame-count-spinner" fx:id="frameCountSpinner"/>
-                        <TextField promptText="Comma separated string or number (1, 2, 3, 4, ...)"
-                          styleClass="reference-string-input-area"
-                          fx:id="stringReferenceInput"/>
-                      </children>
-                      <styleClass>
-                        <String fx:value="user-inputs-area-container"/>
-                        <String fx:value="input-area"/>
-                      </styleClass>
-                    </VBox>
-                  </center>
-                  <left>
-                    <VBox BorderPane.alignment="CENTER" styleClass="input-area">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
-                          text="Frame Count:"/>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
-                          text="Reference String:"/>
-                      </children>
-                    </VBox>
-                  </left>
-                </BorderPane>
-                <HBox styleClass="real-time-results-container">
-                  <children>
-                    <CheckBox mnemonicParsing="false" prefHeight="30.0"
-                      selected="true" fx:id="realTimeResultCheckbox"/>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
-                      text="Real-Time Result:"/>
-                  </children>
-                </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" styleClass="buttons-container">
-                  <children>
-                    <Button mnemonicParsing="false" onAction="#onSolveButtonClicked"
-                      text="Solve" fx:id="solveButton"/>
-                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                      onAction="#onResetButtonClick" text="Reset" fx:id="resetButton"/>
-                    <Button layoutX="410.0" layoutY="10.0" mnemonicParsing="false"
-                      onAction="#onHomeButtonClick" styleClass="home-button"
-                      text="Home" fx:id="homeButton"/>
-                  </children>
-                </HBox>
-                <VBox styleClass="radio-buttons-container">
-                  <children>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
-                      text="Current Algorithm"/>
-                    <VBox>
-                      <children>
-                        <RadioButton mnemonicParsing="false" text="FIFO"
-                          fx:id="fifoRadioButton"/>
-                        <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                          text="LRU" fx:id="lruRadioButton"/>
-                      </children>
-                    </VBox>
-                  </children>
-                </VBox>
-              </children>
-            </VBox>
-          </children>
+            styleClass="root-pane"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="com.prince.schedulingalgogui.views.homePage.HomePageController">
+    <children>
+        <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                    layoutX="10.0"
+                    layoutY="10.0">
+            <children>
+                <ProgressBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                             AnchorPane.topAnchor="0.0" styleClass="loading-indicator" visible="false"
+                             fx:id="loadingIndicator"/>
+            </children>
         </AnchorPane>
-      </bottom>
-      <center>
-        <AnchorPane BorderPane.alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
-          <children>
-            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0" prefHeight="200.0" prefWidth="100.0">
-              <children>
-                <HBox styleClass="descriptive-results-container">
-                  <children>
-                    <HBox HBox.hgrow="ALWAYS" styleClass="descriptive-result">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                          styleClass="descriptive-result-label" text="Hits:"/>
-                        <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
-                          strokeWidth="0.0" styleClass="descriptive-result-value"
-                          text="0" fx:id="hitsText"/>
-                      </children>
-                    </HBox>
-                    <HBox HBox.hgrow="ALWAYS" layoutX="10.0" layoutY="10.0"
-                      styleClass="descriptive-result">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                          styleClass="descriptive-result-label" text="Faults:"/>
-                        <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
-                          strokeWidth="0.0" styleClass="descriptive-result-value"
-                          text="0" fx:id="faultsText"/>
-                      </children>
-                    </HBox>
-                    <HBox HBox.hgrow="ALWAYS" layoutX="210.0" layoutY="10.0"
-                      styleClass="descriptive-result">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                          styleClass="descriptive-result-label" text="Reference Length:"/>
-                        <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
-                          strokeWidth="0.0" styleClass="descriptive-result-value"
-                          text="0" fx:id="referenceStringLengthText"/>
-                      </children>
-                    </HBox>
-                    <HBox HBox.hgrow="ALWAYS" layoutX="638.0" layoutY="14.0"
-                      styleClass="descriptive-result">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                          styleClass="descriptive-result-label" text="Hit %:"/>
-                        <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
-                          strokeWidth="0.0" styleClass="descriptive-result-value"
-                          text="0.00" fx:id="hitPercentageText"/>
-                      </children>
-                    </HBox>
-                    <HBox HBox.hgrow="ALWAYS" layoutX="803.0" layoutY="14.0"
-                      styleClass="descriptive-result">
-                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                          styleClass="descriptive-result-label" text="Fault %:"/>
-                        <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
-                          strokeWidth="0.0" styleClass="descriptive-result-value"
-                          text="0.00" fx:id="faultPercentageText"/>
-                      </children>
-                    </HBox>
-                  </children>
-                </HBox>
-                <TableView cache="true" styleClass="data-table" fx:id="dataTable"/>
-              </children>
-            </VBox>
-          </children>
-        </AnchorPane>
-      </center>
-    </BorderPane>
-  </children>
-  <stylesheets>
-    <URL value="@../../styles/styles.css"/>
-    <URL value="@../../styles/light.css"/>
-    <URL value="@HomePageStyles.css"/>
-  </stylesheets>
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0"
+                    AnchorPane.topAnchor="0.0" styleClass="contents-container">
+            <bottom>
+                <AnchorPane BorderPane.alignment="CENTER" prefHeight="200.0" prefWidth="200.0"
+                            styleClass="user-inputs-container">
+                    <children>
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0"
+                              prefHeight="200.0" prefWidth="100.0" styleClass="input-area">
+                            <children>
+                                <BorderPane>
+                                    <center>
+                                        <VBox BorderPane.alignment="CENTER">
+                                            <BorderPane.margin>
+                                                <Insets/>
+                                            </BorderPane.margin>
+                                            <children>
+                                                <Spinner styleClass="frame-count-spinner" fx:id="frameCountSpinner"/>
+                                                <TextField
+                                                        promptText="Comma separated string or number (1, 2, 3, 4, ...)"
+                                                        styleClass="reference-string-input-area"
+                                                        fx:id="stringReferenceInput"/>
+                                            </children>
+                                            <styleClass>
+                                                <String fx:value="user-inputs-area-container"/>
+                                                <String fx:value="input-area"/>
+                                            </styleClass>
+                                        </VBox>
+                                    </center>
+                                    <left>
+                                        <VBox BorderPane.alignment="CENTER" styleClass="input-area">
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
+                                                      text="Frame Count:"/>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
+                                                      text="Reference String:"/>
+                                            </children>
+                                        </VBox>
+                                    </left>
+                                </BorderPane>
+                                <HBox styleClass="real-time-results-container">
+                                    <children>
+                                        <CheckBox mnemonicParsing="false" prefHeight="30.0"
+                                                  selected="true" fx:id="realTimeResultCheckbox"/>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
+                                              text="Real-Time Result:"/>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="100.0" prefWidth="200.0" styleClass="buttons-container">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#onSolveButtonClicked"
+                                                text="Solve" fx:id="solveButton"/>
+                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                                                onAction="#onResetButtonClick" text="Reset" fx:id="resetButton"/>
+                                        <Button layoutX="410.0" layoutY="10.0" mnemonicParsing="false"
+                                                onAction="#onHomeButtonClick" styleClass="home-button"
+                                                text="Home" fx:id="homeButton"/>
+                                    </children>
+                                </HBox>
+                                <VBox styleClass="radio-buttons-container">
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-text"
+                                              text="Current Algorithm"/>
+                                        <VBox>
+                                            <children>
+                                                <RadioButton mnemonicParsing="false" text="FIFO"
+                                                             fx:id="fifoRadioButton"/>
+                                                <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                                                             text="LRU" fx:id="lruRadioButton"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </bottom>
+            <center>
+                <AnchorPane BorderPane.alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0" prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <HBox styleClass="descriptive-results-container">
+                                    <children>
+                                        <HBox HBox.hgrow="ALWAYS" styleClass="descriptive-result">
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      styleClass="descriptive-result-label" text="Hits:"/>
+                                                <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" styleClass="descriptive-result-value"
+                                                      text="0" fx:id="hitsText"/>
+                                            </children>
+                                        </HBox>
+                                        <HBox HBox.hgrow="ALWAYS" layoutX="10.0" layoutY="10.0"
+                                              styleClass="descriptive-result">
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      styleClass="descriptive-result-label" text="Faults:"/>
+                                                <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" styleClass="descriptive-result-value"
+                                                      text="0" fx:id="faultsText"/>
+                                            </children>
+                                        </HBox>
+                                        <HBox HBox.hgrow="ALWAYS" layoutX="210.0" layoutY="10.0"
+                                              styleClass="descriptive-result">
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      styleClass="descriptive-result-label" text="Reference Length:"/>
+                                                <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" styleClass="descriptive-result-value"
+                                                      text="0" fx:id="referenceStringLengthText"/>
+                                            </children>
+                                        </HBox>
+                                        <HBox HBox.hgrow="ALWAYS" layoutX="638.0" layoutY="14.0"
+                                              styleClass="descriptive-result">
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      styleClass="descriptive-result-label" text="Hit %:"/>
+                                                <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" styleClass="descriptive-result-value"
+                                                      text="0.00" fx:id="hitPercentageText"/>
+                                            </children>
+                                        </HBox>
+                                        <HBox HBox.hgrow="ALWAYS" layoutX="803.0" layoutY="14.0"
+                                              styleClass="descriptive-result">
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      styleClass="descriptive-result-label" text="Fault %:"/>
+                                                <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE"
+                                                      strokeWidth="0.0" styleClass="descriptive-result-value"
+                                                      text="0.00" fx:id="faultPercentageText"/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <TableView cache="true" styleClass="data-table" fx:id="dataTable"/>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </children>
+    <stylesheets>
+        <URL value="@../../styles/styles.css"/>
+        <URL value="@../../styles/light.css"/>
+        <URL value="@HomePageStyles.css"/>
+    </stylesheets>
 </AnchorPane>
